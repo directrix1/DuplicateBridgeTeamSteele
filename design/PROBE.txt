@@ -1,0 +1,188 @@
+
+
+################################## PROBE Estimate of Software Size ###################################
+
+Reused Functions		LOC
+
+xml-gettext			9
+xml-getattribute		8
+xml-getnode			2
+xml-getnodes			10
+xml-readnode			5
+xml-readnodes			53
+xml-skipdontcares		20
+xml-readnodeproperties		24
+xml-unescape			27
+splitoff-prefix-mv		3
+split-at-delimiter-mv		3
+span-mv				3
+split-on-token-mv		3
+getboards			32
+getresults			35
+gethands			62
+gethandcards			32
+suit-list?			8
+suit?				38
+
+Total Reused LOC:  377
+
+############################## Historical Data Table for PROBE ######################################
+
+		Tiny(7%)	Small(24%)	Medium(38%)	Large(24%)	Huge(7%)
+Avg. LOC	1.69		3.82		7.34		16.31		41.71
+
+#####################################################################################################
+
+Predicted Functions		Predicted Size
+
+xml-getallnodes			Medium
+getseparateresults		Large
+getPSC				Large
+getnameforID			Medium
+getboardsforpair		Medium
+getrankings			Medium
+getcontestant			Medium
+boards-no-trav			Small
+boards-trav			Small
+rankings			Small
+personal-score-cards		Medium
+main				Large
+
+Total Predicted LOC:  104.43
+
+####################################################################################################
+
+Total Estimated LOC:  481
+
+####################################################################################################
+
+PSP Info:
+
+new objects:
+
+	- name: xml-getallnodes
+	  estimated lines: 7
+	  type: Calculation
+
+	- name: getseparateresults
+	  estimated lines: 16
+	  type: Calculation
+
+	- name: getPSC
+	  estimated lines: 16
+	  type: Calculation
+
+	- name: getnameforID
+	  estimated lines: 7
+	  type: Calculation
+
+	- name: getboardsforpair
+	  estimated lines: 7
+	  type: Calculation
+
+	- name: getrankings
+	  estimated lines: 7
+	  type: Calculation
+
+	- name: getcontestant
+	  estimated lines: 7
+	  type: Calculation
+
+	- name: boards-no-trav
+	  estimated lines: 4
+	  type: Calculation
+
+	- name: boards-trav
+	  estimated lines: 4
+	  type: Calculation
+
+	- name: rankings
+	  estimated lines: 4
+	  type: Calculation
+
+	- name: personal-score-cards
+	  estimated lines: 7
+	  type: Calculation
+
+	- name: main
+	  estimated lines: 16
+	  type: I/O
+
+reused objects:
+
+	- name: xml-gettext
+	  type: Calculation
+	  estimated base: 9
+
+	- name: xml-getattribute
+	  type: Calculation
+	  estimated base: 8
+
+	- name: xml-getnode
+	  type: Calculation
+	  estimated base: 2
+
+	- name: xml-getnodes
+	  type: Calculation
+	  estimated base: 10
+
+	- name: xml-readnode
+	  type: Calculation
+	  estimated base: 5
+
+	- name: xml-readnodes
+	  type: Calculation
+	  estimated base: 53
+
+	- name: xml-skipdontcares
+	  type: Calculation
+	  estimated base: 20
+
+	- name: xml-readnodeproperties
+	  type: Calculation
+	  estimated base: 24
+
+	- name: xmlunescape
+	  type: Calculation
+	  estimated base: 27
+
+	- name: splitoff-prefix-mv
+	  type: Calculation
+	  estimated base: 3
+
+	- name: split-at-delimiter-mv
+	  type: Calculation
+	  estimated base: 3
+
+	- name: span-mv
+	  type: Calculation
+	  estimated base: 3
+
+	- name: split-on-token-mv
+	  type: Calculation
+	  estimated base: 3
+
+	- name: getboards
+	  type: Calculation
+	  estimated base: 32
+
+	- name: getresults
+	  type: Calculation
+	  estimated base: 35
+
+	- name: gethands
+	  type: Calculation
+	  estimated base: 62
+
+	- name: gethandcards
+	  type: Calculation
+	  estimated base: 32
+
+	- name: suit-list?
+	  type: Calculation
+	  estimated base: 8
+
+	- name: suit?
+	  type: Calculation
+	  estimated base: 38
+

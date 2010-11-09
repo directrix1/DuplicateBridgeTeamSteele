@@ -1,0 +1,39 @@
+#| Edward Flick
+   Software Engineering I
+   iEx4_ver
+
+   Theorems for the iEx4 assignment.
+|#
+
+(in-package "ACL2")
+(include-book "testing" :dir :teachpacks)
+(include-book "doublecheck" :dir :teachpacks)
+(include-book "stringutils")
+
+(defthm stringlist-append-returns-string
+  (implies
+   (stringlist? x)
+   (stringp (stringlist-append x))))
+
+;(defthm stringlist-returns-string-longer-or-equal-to-any-member
+;  (implies
+;   (and
+;    (stringlist? x)
+;    (member-equal y x)
+;    )
+;   (>= (length (stringlist-append x)) (length y))))
+
+; The following call won't work at the moment because my code is written
+; knowing that calls to basiclex functions will always return lists of a
+; certain size and I use mv-let to handle this. The parser chokes because
+; of this assumption. I would change return of functions to "mv"s, but I'm
+; out of time. Upsetting because I wrote that nice suit-list? function
+; which I'm hoping the mechanized logic would be able to infer a quite
+; complex type from. :'(   
+;(include-book "iEx4")
+
+; gethandcards (xmlnodes)
+;(defthm gethandcards-always-returns-string
+;  (implies
+;   (suit-list? x)
+;   (stringp (gethandcards x))))
