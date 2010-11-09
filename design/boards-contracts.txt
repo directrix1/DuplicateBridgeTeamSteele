@@ -1,0 +1,63 @@
+; serialize-results might be a better name?  We can distill this better,
+; too; the prefix + serialization + can be done by the caller.
+getresults (xmlnodes prefix postfix) 
+
+getseparateresults (xmlnodes) 
+
+; serialize-boards?
+; Returns a serialization of the "board" class divs.
+; The resulting serialization will look something like:
+; <div class="board">
+;   <div class="boardnum">Board: 33</div>
+;   (33 comes from the contents of the BoardNo element)
+;   <div class="N">
+;   (N comes from the direction attribute of the Hand element)
+;     <div class="dealer">Dealer</div>
+;     <div class="vulnerable">Vulnerable</div>
+;     &spades;234<br />
+;   </div>
+; </div>
+; *tablehead*
+; <tr>
+;   <td>A3</td>
+;   (A3 comes from the SectionLabel + PairID-NS)
+;   <td>A5</td>
+;   (A5 comes from the SectionLabel + PairID-NS)
+;   <td>5.0</td>
+;   (5.0 comes from the contents of the TotalScore element)
+;   <td>&nbsp;</td> (XXX why this?)
+;   <td>120.0</td>
+;   (120.0 comes from the contents of the MatchpointsNS element)
+;   <td>120.0</td>
+;   (120.0 comes from the contents of the MatchpointsEW element)
+; </tr>
+; *tabletail*)))
+; xmlnodes is a minidom structure
+getboards (xmlnodes)
+
+; serialize-hands?
+
+; serialize hands into divs, where the class is the hand direction derived
+; from xmlnodes, the "vulnerable" and "dealer" divs are added inside as
+; necessary, and the cards are added to each hand via gethandcards.
+;   xmlnodes conforms to the minidom structure and is of type hand. XXX what?
+;   vulnerable is the text content of the Vulnerable node
+;   dealer is the text content of the Dealer node
+gethands (xmlnodes vulnerable dealer)
+
+; serialize-hand-cards?
+
+; serialize the hand cards.
+; For...
+;   <Suit symbol="S">832</Suit>
+;   <Suit symbol="H">QT42</Suit>
+;   <Suit symbol="D">A865</Suit>
+;   <Suit symbol="C">A9</Suit>
+; You will get something like
+; &spades;832<br/>
+; &hearts;QT42<br/>
+; &diams;A865<br/>
+; &clubs;A9<br/>
+;
+; xmlnodes should be a list of minidom Suit nodes.
+gethandcards (xmlnodes)
