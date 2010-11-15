@@ -35,8 +35,9 @@ Avg. LOC	1.69		3.82		7.34		16.31		41.71
 
 Predicted Functions		Predicted Size
 
-xml-getallnodes			Medium
+xml-getdeepnodes		Medium
 getseparateresults		Large
+gethtmlresults			Huge
 getPSC				Large
 getnameforID			Medium
 getboardsforpair		Medium
@@ -48,11 +49,11 @@ rankings			Small
 personal-score-cards		Medium
 main				Large
 
-Total Predicted LOC:  104.43
+Total Predicted LOC:  146.14
 
 ####################################################################################################
 
-Total Estimated LOC:  481
+Total Estimated LOC:  523
 
 ####################################################################################################
 
@@ -60,7 +61,7 @@ PSP Info:
 
 new objects:
 
-	- name: xml-getallnodes
+	- name: xml-getdeepnodes
 	  estimated lines: 7
 	  type: Calculation
 
@@ -70,6 +71,10 @@ new objects:
 
 	- name: getPSC
 	  estimated lines: 16
+	  type: Calculation
+
+	- name: gethtmlresults
+	  estimated lines: 42
 	  type: Calculation
 
 	- name: getnameforID
