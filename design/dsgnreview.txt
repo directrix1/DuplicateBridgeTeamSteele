@@ -1,0 +1,16 @@
+Design Review:
+
+-After looking at getresults we realized that it would be necessary to write a new function getseparateresults
+that returns the results data without the board data. This would be used for Personal Score Card.
+
+-Rename some of the get_ functions in the boards module to serialized_ for all functions that return HTML serializations.
+
+-Remove prefix and postfix parameters from serializedresults, thus it only receives xmlnodes. Simplifies getresults to make it more consistent
+with the other functions in the boards module. The benefit from prefix and postfix can easily be achieved by the calling 
+function.
+
+-Explained the meaning of the <td>&nbsp;</tb>. Used to create a space in the case that the first Total Score is empty.
+
+-Expanded upon psc and rankings to better explain where the data these two modules receives originates from.
+	* getNameForID receives names from the rankings data as this is where the names are contained in the xml schema
+
