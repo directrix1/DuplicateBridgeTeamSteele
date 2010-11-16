@@ -9,11 +9,17 @@
    Software that creates a document object model from XML input.
 |#
 
-(include-book "../char-utilities")
-
+(defconst *whitespace*
+  (list (code-char 32)
+        (code-char 10)
+        (code-char 9)
+        (code-char 11)
+        (code-char 12)
+        (code-char 13)
+        (code-char 27)))
 (defconst *endtagname* (cons #\> (cons #\/ *whitespace*)))
 (defconst *endattrname* (cons #\= *whitespace*))
-
+  
 (interface Ixmlminidom
   (sig xml-unescape (escapedchars))
   (sig xml-readnodeproperties (xmlchars))

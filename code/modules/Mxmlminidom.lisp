@@ -9,8 +9,6 @@
    Software that creates a document object model from XML input.
 |#
 
-(include-book "../basiclex")
-
 (require "../interfaces/Ixmlminidom.lisp")
 
 ;(defconst *whitespace* '(#\Space #\Return #\Newline #\Linefeed #\Tab ))
@@ -18,6 +16,8 @@
 ;(defconst *endattrname* (cons #\= *whitespace*))
 
 (module Mxmlminidom 
+  (include-book "../basiclex")
+
   ;These functions just wrap the basiclex functions of the same name
   ;returning mv's instead of lists because they are a guaranteed size
   ;and I like using mv-let.
@@ -313,4 +313,4 @@
         (xml-isnodelist (cdr nodes))))))
    
    )
-  (export "Ixmlminidom"))
+  (export Ixmlminidom))
