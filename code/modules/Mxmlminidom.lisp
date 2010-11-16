@@ -9,9 +9,9 @@
    Software that creates a document object model from XML input.
 |#
 
-(include-book "basiclex")
+(include-book "../basiclex")
 
-(require "Ixmlminidom.lisp")
+(require "../interfaces/Ixmlminidom.lisp")
 
 ;(defconst *whitespace* '(#\Space #\Return #\Newline #\Linefeed #\Tab ))
 ;(defconst *endtagname* (cons #\> (cons #\/ *whitespace*)))

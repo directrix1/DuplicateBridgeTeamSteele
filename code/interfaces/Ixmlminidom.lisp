@@ -9,7 +9,7 @@
    Software that creates a document object model from XML input.
 |#
 
-(include-book "char-utilities")
+(include-book "../char-utilities")
 
 (defconst *endtagname* (cons #\> (cons #\/ *whitespace*)))
 (defconst *endattrname* (cons #\= *whitespace*))
