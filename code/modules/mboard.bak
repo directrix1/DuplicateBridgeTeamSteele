@@ -1,11 +1,57 @@
-;; The first four lines of this file were added by Dracula.
-;; They tell DrScheme that this is a Dracula Modular ACL2 program.
-;; Leave these lines unchanged so that DrScheme can properly load this file.
-#reader(planet "reader.ss" ("cce" "dracula.plt") "modular" "lang")
 (in-package "ACL2")
 
 (require "iBoard")
 (module mBoard
+  (include-book "io-utilities" :dir :teachpacks)
+  ;(include-book "basiclex")
+  (include-book "xmlminidom")
+  (include-book "stringutils")
+
+  (defconst *div-open-1* "<div class=\"")
+  (defconst *div-open-2* "\">")
+  (defconst *div-close* "</div>\n")
+  (defconst *br* "<br />\n")
+  (defconst *htmlhead* 
+    (stringlist-append 
+     (list
+      "<html><head><style>"
+      "body {background-color: white; color: black;}"
+      ".board {clear: both; position: relative; top: 0px; left: 0px;"
+      "width: 45em; height: 30em; border: none;"
+      "margin: 1em 1em 0em; background-color: #f8f8f8;}\n"
+      ".boardnum {position: absolute; left: 0em; top: 0em;}\n"
+      ".N {position: absolute; height: 10em; width: 15em; left: 15em;"
+      "top: 0em; border: dashed 1px black; background-color: white;}\n"
+      ".S {position: absolute; height: 10em; width: 15em; left: 15em;"
+      "top: 20em; border: dashed 1px black; background-color: white;}\n"
+      ".E {position: absolute; height: 10em; width: 15em; left: 30em;"
+      "top: 10em; border: dashed 1px black; background-color: white;}\n"
+      ".W {position: absolute; height: 10em; width: 15em; left: 0em;"
+      "top: 10em; border: dashed 1px black; background-color: white;}\n"
+      ".dealer {text-align: center; font-weight: bold; color: blue;}\n"
+      ".vulnerable {text-align: center; font-weight: bold; color: red;}\n"
+      ".results {clear: none; float: left; width: 45em;"
+      "margin: 0em 1em 1em;}\n"
+      ".results tr * {border: 1px solid black; margin: 1px;}\n"
+      "</style></head><body>")))
+  (defconst *htmltail* "</body></html>")
+  (defconst *tablehead*
+    (stringlist-append
+     (list
+      "<table class=\"results\"><tr>"
+      "<th colspan=\"2\">Pairs</th>"
+      "<th colspan=\"2\">Total Score</th>"
+      "<th colspan=\"2\">Match Points</th>"
+      "</tr><tr>"
+      "<th>NS</th>"
+      "<th>EW</th>"
+      "<th>NS</th>"
+      "<th>EW</th>"
+      "<th>NS</th>"
+      "<th>EW</th>"
+      "</tr>"
+      )))
+  (defconst *tabletail* "</table>\n")
   
   ; gethandcards (xmlnodes) → returns concatenated list of strings composed
 ; of the concatenation of suite symbol in HTML and card characters from
