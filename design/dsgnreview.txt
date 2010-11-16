@@ -1,16 +1,27 @@
 Design Review:
 
 -After looking at getresults we realized that it would be necessary to write a new function getseparateresults
-that returns the results data without the board data. This would be used for Personal Score Card.
+that returns the results data without the board data. This would be used for Personal Score Card (Brett, Micah, Zach).
+	*Possible need for future revisions after looking in depth at Code in review session with group. Results is likely going
+	 to be more complicated than initially predicted (Brett, Micah, Ed, Colby).
 
--Rename some of the get_ functions in the boards module to serialized_ for all functions that return HTML serializations.
+-Rename some of the get_ functions in the boards module to serialized_ for all functions that return HTML serializations (Ed, Zach, Colby).
 
 -Remove prefix and postfix parameters from serializedresults, thus it only receives xmlnodes. Simplifies getresults to make it more consistent
 with the other functions in the boards module. The benefit from prefix and postfix can easily be achieved by the calling 
-function.
+function (Ed, Colby).
 
--Explained the meaning of the <td>&nbsp;</tb>. Used to create a space in the case that the first Total Score is empty.
+-Explained the meaning of the <td>&nbsp;</tb>. Used to create a space in the case that the first Total Score is empty (Ed).
 
--Expanded upon psc and rankings to better explain where the data these two modules receives originates from.
+-Expanded upon psc and rankings to better explain where the data these two modules receives originates from (Ed, Zach, Colby).
 	* getNameForID receives names from the rankings data as this is where the names are contained in the xml schema
+
+-Realized that gethtmlresults was not needed and removed from architecture and dsgn documents (Brett, Zach, Kye).
+
+-Updated PROBE and PSP to reflect all changes (Kye, Colby, Zach).
+
+-Discussed the functionality of the IO defuns and how they will handle output of the 4 html files. Decided that each function will receive the input xml
+character list from main and output to specific files without sending the html back up to main (Kye, Colby, Brett, Ed, Zach, Micah).
+
+-Updated Rough Process in design to better reflect changes made to the rest of the document (Ed, Brett, Colby).
 
