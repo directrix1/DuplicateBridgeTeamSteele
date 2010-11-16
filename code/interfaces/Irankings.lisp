@@ -5,6 +5,7 @@
 (require "Ixmlminidom.lisp")
 
 (interface Irankings
+  (include Ixmlminidom)
   (sig getrankings (rankingnodes))
   (sig getcontestant (pairid rankingnodes))
   (con getrankings-delivers-string
