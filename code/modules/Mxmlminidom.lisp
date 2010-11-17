@@ -8,6 +8,7 @@
 
    Software that creates a document object model from XML input.
 |#
+(in-package "ACL2")
 
 (require "../interfaces/Ixmlminidom.lisp")
 (require "../interfaces/Ibasiclex.lisp")

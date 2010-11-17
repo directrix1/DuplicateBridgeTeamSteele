@@ -1,11 +1,19 @@
+#| Team Steele
+   Software Engineering I
+   iBoard
+
+   Software that creates a document object model from XML input.
+|#
+
 (in-package "ACL2")
 
-;(require "iBoard")
 (interface iBoard
+  
   (include-book "io-utilities" :dir :teachpacks)
+  (include-book "list-utilities" :dir :teachpacks)
   ;(include-book "basiclex")
-  (include-book "xmlminidom")
-  (include-book "stringutils")
+  ;(include-book "xmlminidom")
+  ;(include-book "stringutils")
 
   (defconst *div-open-1* "<div class=\"")
   (defconst *div-open-2* "\">")
@@ -54,30 +62,39 @@
   (defconst *tabletail* "</table>\n")
   
   ; gethandcards (xmlnodes) → returns concatenated list of strings composed
-; of the concatenation of suite symbol in HTML and card characters from
-; xmlnodes where xmlnodes is a list of Suite xml nodes
-(sig serializedhandcards (xmlnodes))
-
-; gethands (xmlnodes vulnerable dealer) → returns concatenated list of divs
-; with class set to hand direction from xmlnodes, where xmlnodes is a list
-; of xmlnode, of type hand, adds “vulnerable” and “dealer” divs inside the
-; divs as necessary, and adds the cards to each hand
-(sig serializedhands (xmlnodes vulnerable dealer))
-
-;getseparateresults (xmlnodes) → serializes xmlnodes to a
-;sequence of HTML tables corresponding to the seperate results
-;for each player
-(sig getseparateresults (xmlnodes))
+  ; of the concatenation of suite symbol in HTML and card characters from
+  ; xmlnodes where xmlnodes is a list of Suite xml nodes
+  (sig serializedhandcards (xmlnodes))
   
-;getresults (xmlnodes prefix postfix) → returns a string consisting of
-; the concatenation of prefix, results table rows from each “Result” node,
-; and postfix
-(sig serializedresults (xmlnodes prefix postfix))
-
-;getboards (xmlnodes) → returns appended “board” class divs with their
-; “results” tables from the xmlnode “Board” and “results” formatted to
-; be rendered with the deal and results as required by description
-(sig serializedboards (xmlnodes))
+  ; gethands (xmlnodes vulnerable dealer) → returns concatenated list of divs
+  ; with class set to hand direction from xmlnodes, where xmlnodes is a list
+  ; of xmlnode, of type hand, adds “vulnerable” and “dealer” divs inside the
+  ; divs as necessary, and adds the cards to each hand
+  (sig serializedhands (xmlnodes vulnerable dealer))
+  
+  ;grabs the results for one board separately from the board information
+  ;without html serialization  
+  (sig getseparateresults (xmlnodes))
+  
+  ;getseparateresults (xmlnodes) → serializes xmlnodes to a
+  ;sequence of HTML tables corresponding to the seperate results
+  ;for each player
+  (sig getallseparateresults (xmlnodes))
+  
+  ;getresults (xmlnodes prefix postfix) → returns a string consisting of
+  ; the concatenation of prefix, results table rows from each “Result” node,
+  ; and postfix
+  (sig serializedresults (xmlnodes prefix postfix))
+  
+  ;getboards (xmlnodes) → returns appended “board” class divs with their
+  ; “results” tables from the xmlnode “Board” and “results” formatted to
+  ; be rendered with the deal and results as required by description
+  (sig serializedboards (xmlnodes))
+  
+  ; stringlist-append (stringlist)
+  ; stringlist = list of strings
+  ; returns: the appended composite of all strings in stringlist
+  (sig stringlist-append (stringlist)
 )
   
   
