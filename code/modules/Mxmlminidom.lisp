@@ -10,14 +10,17 @@
 |#
 
 (require "../interfaces/Ixmlminidom.lisp")
+(require "../interfaces/Ibasiclex.lisp")
 
 ;(defconst *whitespace* '(#\Space #\Return #\Newline #\Linefeed #\Tab ))
 ;(defconst *endtagname* (cons #\> (cons #\/ *whitespace*)))
 ;(defconst *endattrname* (cons #\= *whitespace*))
 
 (module Mxmlminidom 
-  (include-book "../basiclex")
+  (import Ibasiclex)
 
+  (include-book "list-utilities" :dir :teachpacks)
+  
   ;These functions just wrap the basiclex functions of the same name
   ;returning mv's instead of lists because they are a guaranteed size
   ;and I like using mv-let.
