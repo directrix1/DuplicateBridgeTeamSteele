@@ -9,5 +9,5 @@
   (import Ixmlminidom)
   (defun getrankings (rankingnodes)
     )
-  (defun getcontestant (section dir id rankingnodes)
+  (defun getcontestants (section dir id rankingnodes)
     ))
