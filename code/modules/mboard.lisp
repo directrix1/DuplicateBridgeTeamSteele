@@ -124,9 +124,9 @@
   
   ;grabs the results for one board separately from the board information
   ;without html serialization
-  (defun getseparateresults (xmlnodes boardnum)
+  (defun getseparateresults (xmlnodes boardnum ns ew)
       (if (null xmlnodes)
-          (mv nil nil)
+          (mv ns ew)
           (let*
               (
                (result (car xmlnodes))
@@ -144,21 +144,27 @@
               (ns ew)
               (getseparateresults rest)
               (mv 
-               (cons ((mv pairns section) . (mv boardnum pairew
-                     (if (string-equal totaldir "N-S")
-                                     totalscorenode (string-append "-" totalscorenode))
-                                 pointsns)) ns)
-               (cons ((mv pairew section) . (mv boardnum pairns
-                     (if (string-equal totaldir "E-W")
-                                     totalscorenode (string-append "-" totalscorenode))
-                                 pointsew)) ew))))))
+               (cons ((mv pairns section)
+                      . (cons 
+                         (mv boardnum pairew
+                             (if (string-equal totaldir "N-S")
+                                 totalscorenode (string-append "-" totalscorenode))
+                             pointsns)
+                         (cdr (assoc-equal (mv pairns section) ns)))) ns)
+               (cons ((mv pairew section)
+                      . (cons
+                         (mv boardnum pairns
+                             (if (string-equal totaldir "E-W")
+                                 totalscorenode (string-append "-" totalscorenode))
+                             pointsew)
+                         (cdr (assoc-equal (mv pairew section) ew)))) ew))))))
   
     ;getallseparateresults (xmlnodes) → serializes xmlnodes to a
     ;sequence of HTML tables corresponding to the seperate results
     ;for each player
     (defun getallseparateresults (xmlnodes)
     (if (null xmlnodes)
-        ""
+        (mv nil nil)
         (let* (
                (game (car xmlnodes))
                (rest (cdr xmlnodes))
@@ -167,11 +173,10 @@
                (results
                 (xml-getnodes game "Result"))
                )
-          (stringlist-append 
-           (list 
-            boardnum " "
-            (getseparateresults results boardnum)
-            (getallseparateresults rest))))))
+          (mv-let
+           (ns ew)
+           (getallseparateresults rest)
+            (getseparateresults results boardnum ns ew))))))
   
   ;getresults (xmlnodes prefix postfix) → returns a string consisting of
   ;the concatenation of prefix, results table rows from each “Result” node
