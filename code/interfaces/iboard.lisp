@@ -1,3 +1,7 @@
+;; The first four lines of this file were added by Dracula.
+;; They tell DrScheme that this is a Dracula Modular ACL2 program.
+;; Leave these lines unchanged so that DrScheme can properly load this file.
+#reader(planet "reader.ss" ("cce" "dracula.plt") "modular" "lang")
 #| Team Steele
    Software Engineering I
    iBoard
@@ -5,23 +9,12 @@
    Software that creates a document object model from XML input.
 |#
 
-(in-package "ACL2")
-
-(interface iBoard
-  
-  (include-book "io-utilities" :dir :teachpacks)
-  (include-book "list-utilities" :dir :teachpacks)
-  ;(include-book "basiclex")
-  ;(include-book "xmlminidom")
-  ;(include-book "stringutils")
-
-  (defconst *div-open-1* "<div class=\"")
+(defconst *div-open-1* "<div class=\"")
   (defconst *div-open-2* "\">")
   (defconst *div-close* "</div>\n")
   (defconst *br* "<br />\n")
   (defconst *htmlhead* 
-    (stringlist-append 
-     (list
+    (concatenate 'string
       "<html><head><style>"
       "body {background-color: white; color: black;}"
       ".board {clear: both; position: relative; top: 0px; left: 0px;"
@@ -41,11 +34,10 @@
       ".results {clear: none; float: left; width: 45em;"
       "margin: 0em 1em 1em;}\n"
       ".results tr * {border: 1px solid black; margin: 1px;}\n"
-      "</style></head><body>")))
+      "</style></head><body>"))
   (defconst *htmltail* "</body></html>")
   (defconst *tablehead*
-    (stringlist-append
-     (list
+    (concatenate 'string
       "<table class=\"results\"><tr>"
       "<th colspan=\"2\">Pairs</th>"
       "<th colspan=\"2\">Total Score</th>"
@@ -58,8 +50,16 @@
       "<th>NS</th>"
       "<th>EW</th>"
       "</tr>"
-      )))
+      ))
   (defconst *tabletail* "</table>\n")
+  
+  
+(interface iBoard
+  
+  
+  ;(include-book "basiclex")
+  ;(include-book "xmlminidom")
+  ;(include-book "stringutils")
   
   ; gethandcards (xmlnodes) → returns concatenated list of strings composed
   ; of the concatenation of suite symbol in HTML and card characters from
@@ -74,7 +74,7 @@
   
   ;grabs the results for one board separately from the board information
   ;without html serialization  
-  (sig getseparateresults (xmlnodes))
+  (sig getseparateresults (xmlnodes boardnum ns1 ew1))
   
   ;getseparateresults (xmlnodes) → serializes xmlnodes to a
   ;sequence of HTML tables corresponding to the seperate results
@@ -94,7 +94,7 @@
   ; stringlist-append (stringlist)
   ; stringlist = list of strings
   ; returns: the appended composite of all strings in stringlist
-  (sig stringlist-append (stringlist)
-)
+  (sig stringlist-append (stringlist))
+  )
   
   

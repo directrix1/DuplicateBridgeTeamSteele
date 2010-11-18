@@ -9,15 +9,16 @@
    Software that creates a document object model from XML input.
 |#
 
-(in-package "ACL2")
-
-(require "../interfaces/iBoard")
+(require "../interfaces/iBoard.lisp")
 (require "../interfaces/Ibasiclex.lisp")
 (require "../interfaces/Ixmlminidom.lisp")
 (module mBoard
-  
+
   (import Ibasiclex)
   (import Ixmlminidom)
+  
+  (include-book "io-utilities" :dir :teachpacks)
+  (include-book "list-utilities" :dir :teachpacks)
  
   ; gethandcards (xmlnodes) → returns concatenated list of strings composed
   ; of the concatenation of suite symbol in HTML and card characters from
@@ -124,9 +125,9 @@
   
   ;grabs the results for one board separately from the board information
   ;without html serialization
-  (defun getseparateresults (xmlnodes boardnum ns ew)
+  (defun getseparateresults (xmlnodes boardnum ns1 ew1)
       (if (null xmlnodes)
-          (mv ns ew)
+          (mv ns1 ew1)
           (let*
               (
                (result (car xmlnodes))
@@ -142,17 +143,17 @@
                )
              (mv-let 
               (ns ew)
-              (getseparateresults rest)
+              (getseparateresults rest boardnum ns1 ew1)
               (mv 
-               (cons ((mv pairns section)
-                      . (cons 
+               (cons (cons (mv pairns section)
+                       (cons 
                          (mv boardnum pairew
                              (if (string-equal totaldir "N-S")
                                  totalscorenode (string-append "-" totalscorenode))
                              pointsns)
                          (cdr (assoc-equal (mv pairns section) ns)))) ns)
-               (cons ((mv pairew section)
-                      . (cons
+               (cons (cons (mv pairew section)
+                       (cons
                          (mv boardnum pairns
                              (if (string-equal totaldir "E-W")
                                  totalscorenode (string-append "-" totalscorenode))
@@ -176,7 +177,7 @@
           (mv-let
            (ns ew)
            (getallseparateresults rest)
-            (getseparateresults results boardnum ns ew))))))
+            (getseparateresults results boardnum ns ew)))))
   
   ;getresults (xmlnodes prefix postfix) → returns a string consisting of
   ;the concatenation of prefix, results table rows from each “Result” node
