@@ -7,14 +7,14 @@
 (interface Irankings
   (include Ixmlminidom)
   (sig getrankings (rankingnodes))
-  (sig getcontestant (pairid rankingnodes))
+  (sig getcontestants (section dir id rankingnodes))
   (con getrankings-delivers-string
     (implies (xml-isnodelist rankingnodes)
              (stringp (getrankings rankingnodes))))
   (con getcontestant-delivers-list-of-strings
     (implies (xml-isnodelist rankingnodes)
-             (and (true-listp (getcontestant pairid rankingnodes))
-                  (equal (len (getcontestant pairid rankingnodes)
+             (and (true-listp (getcontestants section dir id rankingnodes))
+                  (equal (len (getcontestants section dir id rankingnodes)
                               (list "Pair No."
                                     "Players"
                                     "Strat"
