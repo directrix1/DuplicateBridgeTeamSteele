@@ -12,7 +12,7 @@
   ;the following information from each board listed in the XML file and 
   ;creates an HTML page with this information formatted into tables:
   ;Board numbers, dealer, vulnerable, and hands for each direction
-  (defun boards-no-trav(bridgeXML state))
+  (defun boards-no-trav(bridgeXML state)bridgeXML)
   
   
   ;boards-trav(bridgeXML state) Given a duplicate bridge XML file, gets the
@@ -20,24 +20,24 @@
   ;for each board, which includes the total score and matchpoints for all 
   ;pairs at that board. Creates HTML page with this information with the 
   ;board information and travelers information in separate tables.
-  (defun boards-trav(bridgeXML state))
+  (defun boards-trav(bridgeXML state)bridgeXML)
   
   
   ;rankings(bridgeXML state) Given a duplicate bridge XML file, creates a 
   ;rankings table in an HTML file including each pairs ranking and various 
   ;other stats such as matchpoint and percentage score.
-  (defun rankings(bridgeXML state))
+  (defun rankings(bridgeXML state)bridgeXML)
   
   
   ;personal-score-cards(bridgeXML state) Given a duplicate bridge XML file,
   ;creates an HTML file containing personal score cards for each pair, which
   ;includes information about each match they played an against whom.
-  (defun personal-score-cards (bridgeXML state))
+  (defun personal-score-cards (bridgeXML state)bridgeXML)
 
   ;main(bridgeXML state) Given a duplicate bridge XML file, extracts
   ;appropriate information to create four 
   ;HTML pages that link together: boards, boards with travelers, rankings,
   ;and personal score card webpages.
-  (defun main (bridgeXML state))
+  (defun main (bridgeXML state)bridgeXML)
   
   (export iio))
