@@ -221,7 +221,7 @@
   ;getboards (xmlnodes) → returns appended “board” class divs with their
   ; “results” tables from the xmlnode “Board” and “results” formatted to
   ; be rendered with the deal and results as required by description
-  (defun serializedboards (xmlnodes)
+  (defun serializedboards (xmlnodes trav-flag)
     (if (null xmlnodes)
         ""
         (let* (
@@ -251,7 +251,8 @@
             *div-close*
             (serializedhands hands vulnerable dealer)
             *div-close*
-            (serializedresults results *tablehead* *tabletail*)
+            (if (eq trav-hand '1)
+                (serializedresults results *tablehead* *tabletail*))
             (serializedboards rest))))))
   
   
