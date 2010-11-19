@@ -13,7 +13,24 @@
   ;the following information from each board listed in the XML file and 
   ;creates an HTML page with this information formatted into tables:
   ;Board numbers, dealer, vulnerable, and hands for each direction
-  (defun boards-no-trav(bridgeXML state)bridgeXML)
+  (defun boards-no-trav(bridgeXML state)
+    (defun boards-trav(bridgeXML state)
+    (mv-let
+     (status state)
+     (string-list->file
+      (string-append "boards-no-trav" ".htm")
+      (list
+       *htmlhead*
+       (serializedboards 
+        (xml-getnodes (xml-getnode (xml-getnode 
+                      (xml-readnode bridgeXML)
+                      "Game") "HandRecords") "Board") '0)
+       *htmltail*
+       )
+      state)
+     (if (null status)
+         (mv 'ok state)
+         (mv 'error state)))))
   
   
   ;boards-trav(bridgeXML state) Given a duplicate bridge XML file, gets the
@@ -25,13 +42,13 @@
     (mv-let
      (status state)
      (string-list->file
-      (string-append outfile ".htm")
+      (string-append "boards-trav" ".htm")
       (list
        *htmlhead*
        (serializedboards 
         (xml-getnodes (xml-getnode (xml-getnode 
                       (xml-readnode bridgeXML)
-                      "Game") "HandRecords") "Board"))
+                      "Game") "HandRecords") "Board") '1)
        *htmltail*
        )
       state)
