@@ -85,6 +85,13 @@
   ; the concatenation of prefix, results table rows from each “Result” node,
   ; and postfix
   (sig serializedresults (xmlnodes prefix postfix))
+  (con serializedresults-nil=string-append-prefix-postfix-thm
+    (implies (and (stringp prefix) (stringp postfix))
+             (string-equal (serializedresults nil prefix postfix)
+                           (string-append prefix postfix))))
+  (con serializedresults-nil-returns-a-string-thm
+       (implies (and (stringp prefix) (stringp postfix))
+                (stringp (serializedresults nil prefix postfix))))
   
   ;getboards (xmlnodes) → returns appended “board” class divs with their
   ; “results” tables from the xmlnode “Board” and “results” formatted to
