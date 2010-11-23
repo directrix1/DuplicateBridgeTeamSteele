@@ -9,7 +9,7 @@
    Software that creates a document object model from XML input.
 |#
 
-(require "../interfaces/iBoard.lisp")
+(require "../interfaces/iboard.lisp")
 (require "../interfaces/Ibasiclex.lisp")
 (require "../interfaces/Ixmlminidom.lisp")
 (module mBoard
@@ -251,9 +251,10 @@
             *div-close*
             (serializedhands hands vulnerable dealer)
             *div-close*
-            (if (eq trav-hand '1)
-                (serializedresults results *tablehead* *tabletail*))
-            (serializedboards rest))))))
+            (if (eq trav-flag '1)
+                (serializedresults results *tablehead* *tabletail*)
+                "")
+            (serializedboards rest trav-flag))))))
   
   
   

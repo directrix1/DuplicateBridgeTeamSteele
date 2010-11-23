@@ -3,11 +3,11 @@
 ;; Leave these lines unchanged so that DrScheme can properly load this file.
 #reader(planet "reader.ss" ("cce" "dracula.plt") "modular" "lang")
 (require "../interfaces/iio.lisp")
-(require "../interfaces/iBoard.lisp")
+(require "../interfaces/iboard.lisp")
 (require "../interfaces/Ixmlminidom.lisp")
 
 (module mio
-  
+  (import iboard)
   
   ;boards-no-trav(bridgeXML state) Given a duplicate bridge XML file, gets
   ;the following information from each board listed in the XML file and 
@@ -83,6 +83,6 @@
                (rankings contents)
                (personal-score-cards contents)
                )
-              (mv 'error state)))))
+              (mv 'error state))))
   
   (export iio))
