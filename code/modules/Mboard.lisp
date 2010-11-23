@@ -9,10 +9,10 @@
    Software that creates a document object model from XML input.
 |#
 
-(require "../interfaces/iboard.lisp")
+(require "../interfaces/Iboard.lisp")
 (require "../interfaces/Ibasiclex.lisp")
 (require "../interfaces/Ixmlminidom.lisp")
-(module mBoard
+(module Mboard
 
   (import Ibasiclex)
   (import Ixmlminidom)
@@ -20,46 +20,46 @@
   (include-book "io-utilities" :dir :teachpacks)
   (include-book "list-utilities" :dir :teachpacks)
  
-  ; gethandcards (xmlnodes) → returns concatenated list of strings composed
-  ; of the concatenation of suite symbol in HTML and card characters from
-  ; xmlnodes where xmlnodes is a list of Suite xml nodes
+  ; serializedhandcards (xmlnodes) → returns concatenated list of strings
+  ; composed of the concatenation of suit symbol in HTML and card
+  ; characters from xmlnodes where xmlnodes is a list of Suit xml nodes
   (defun serializedhandcards (xmlnodes)
     (if (null xmlnodes)
         ""
         (let* (
-               (suite 
+               (suit 
                 (car xmlnodes))
                (rest
                 (cdr xmlnodes))
-               (suitesymbol
-                (xml-getattribute suite "symbol"))
-               (suitehtml
+               (suitsymbol
+                (xml-getattribute suit "symbol"))
+               (suithtml
                 (if
-                 (string-equal suitesymbol "S")
+                 (string-equal suitsymbol "S")
                  "&spades;"
                  (if
-                  (string-equal suitesymbol "C")
+                  (string-equal suitsymbol "C")
                   "&clubs;"
                   (if
-                   (string-equal suitesymbol "D")
+                   (string-equal suitsymbol "D")
                    "&diams;"
                    "&hearts;"))))
                (cards
-                (xml-gettext suite))
+                (xml-gettext suit))
                )
-          (stringlist-append
-           (list
-            suitehtml
+          (concatenate 'string
+            suithtml
             cards
             *br*
             (serializedhandcards rest)
-            ))
+            )
           )))
   
-  ; gethands (xmlnodes vulnerable dealer) → returns concatenated list of divs
-  ; with class set to hand direction from xmlnodes, where xmlnodes is a list
-  ; of xmlnode, of type hand, adds “vulnerable” and “dealer” divs inside the
-  ; divs as necessary, and adds the cards to each hand
+  ; serializedhands (xmlnodes vulnerable dealer) → returns concatenated
+  ; list of divs with class set to hand direction from xmlnodes, where
+  ; xmlnodes is a list of xmlnode, of type hand, adds “vulnerable” and
+  ; “dealer” divs inside the divs as necessary, and adds the cards to each
+  ; hand
   (defun serializedhands (xmlnodes vulnerable dealer)
     (if (null xmlnodes)
         ""
@@ -70,18 +70,17 @@
                 (cdr xmlnodes))
                (direction
                 (xml-getattribute hand "direction"))
-               (suites
+               (suits
                 (xml-getnodes hand "Suit"))
                (dealerhtml
                 (if (string-equal dealer direction)
-                    (stringlist-append
-                     (list
+                    (concatenate 'string
                       *div-open-1*
                       "dealer"
                       *div-open-2*
                       "Dealer"
                       *div-close*
-                      ))
+                      )
                     ""
                     ))
                (vulnerablehtml
@@ -101,30 +100,31 @@
                     (string-equal direction "W")
                     ))
                   )
-                 (stringlist-append
-                  (list
+                 (concatenate 'string
                    *div-open-1*
                    "vulnerable"
                    *div-open-2*
                    "Vulnerable"
                    *div-close*
-                   ))
+                   )
                  ""
                  ))
                )
-          (stringlist-append 
-           (list 
+          (concatenate 'string 
             *div-open-1*
             direction
             *div-open-2*
             dealerhtml
             vulnerablehtml
-            (serializedhandcards suites)
+            (serializedhandcards suits)
             *div-close*
-            (serializedhands rest vulnerable dealer))))))
+            (serializedhands rest vulnerable dealer)))))
   
-  ;grabs the results for one board separately from the board information
-  ;without html serialization
+  ; getseparateresults (xmlnodes boardnum ns1 ew1) → grabs the results for
+  ; one board separately from the board information without html
+  ; serialization where xmlnodes is the list of results for a board,
+  ; boardnum is the boardnum,  ns1 and ew1 are the initial lists. It
+  ; returns an FIXME.
   (defun getseparateresults (xmlnodes boardnum ns1 ew1)
       (if (null xmlnodes)
           (mv ns1 ew1)
@@ -151,41 +151,36 @@
                              (if (string-equal totaldir "N-S")
                                  totalscorenode (string-append "-" totalscorenode))
                              pointsns)
-                         (cdr (assoc-equal (mv pairns section) ns)))) ns)
+                         (cdr (assoc-equal (mv pairns section) ns)))) ns) ;FIXME
                (cons (cons (mv pairew section)
                        (cons
                          (mv boardnum pairns
                              (if (string-equal totaldir "E-W")
                                  totalscorenode (string-append "-" totalscorenode))
                              pointsew)
-                         (cdr (assoc-equal (mv pairew section) ew)))) ew))))))
+                         (cdr (assoc-equal (mv pairew section) ew)))) ew)))))) ;FIXME
   
-    ;getallseparateresults (xmlnodes) → serializes xmlnodes to a
-    ;sequence of HTML tables corresponding to the seperate results
-    ;for each player
-    (defun getallseparateresults (xmlnodes)
+  ; getallseparateresults (xmlnodes) → converts xmlnodes, a sequence of
+  ; board nodes, to a sequence of FIXME 
+  (defun getallseparateresults (xmlnodes)
     (if (null xmlnodes)
         (mv nil nil)
         (let* (
-               (game (car xmlnodes))
+               (board (car xmlnodes))
                (rest (cdr xmlnodes))
                (boardnum
-                (xml-gettext (xml-getnode game "BoardNo")))
+                (xml-gettext (xml-getnode board "BoardNo")))
                (results
-                (xml-getnodes game "Result"))
+                (xml-getnodes board "Result"))
                )
           (mv-let
            (ns ew)
            (getallseparateresults rest)
-            (getseparateresults results boardnum ns ew)))))
+           (getseparateresults results boardnum ns ew)))))
   
-  ;getresults (xmlnodes prefix postfix) → returns a string consisting of
-  ;the concatenation of prefix, results table rows from each “Result” node
-  ;and postfix
-  (defun serializedresults (xmlnodes prefix postfix)
-    (stringlist-append
-     (list
-      prefix
+  ; serializedresults (xmlnodes) → returns a string consisting of
+  ; the concatenation of results table rows from each “Result” node
+  (defun serializedresults (xmlnodes)
       (if (null xmlnodes)
           ""
           (let*
@@ -201,45 +196,42 @@
                (pointsns (xml-gettext (xml-getnode result "MatchpointsNS")))
                (pointsew (xml-gettext (xml-getnode result "MatchpointsEW")))
                )
-            (stringlist-append
-             (list
-            "<tr>"
-            "<td>" section pairns "</td>"
-            "<td>" section pairew "</td>"
-            "<td>" (if (string-equal totaldir "N-S")
-                       totalscore "&nbsp;") "</td>"
-            "<td>" (if (string-equal totaldir "E-W")
-                       totalscore "&nbsp;") "</td>"
-            "<td>" pointsns "</td>"
-            "<td>" pointsew "</td>"
-            "</tr>"
-            (serializedresults rest "" "")
-            ))))
-      postfix
-      )))
+            (concatenate 'string
+              "<tr>"
+              "<td>" section pairns "</td>"
+              "<td>" section pairew "</td>"
+              "<td>" (if (string-equal totaldir "N-S")
+                         totalscore "&nbsp;") "</td>"
+              "<td>" (if (string-equal totaldir "E-W")
+                         totalscore "&nbsp;") "</td>"
+              "<td>" pointsns "</td>"
+              "<td>" pointsew "</td>"
+              "</tr>"
+            (serializedresults rest)
+            )))
+      )
   
-  ;getboards (xmlnodes) → returns appended “board” class divs with their
-  ; “results” tables from the xmlnode “Board” and “results” formatted to
-  ; be rendered with the deal and results as required by description
+  ; serializedboards (xmlnodes) → returns appended “board” class divs with
+  ; their “results” tables from the xmlnode “Board” and “results” formatted
+  ; to be rendered with the deal and results as required by description
   (defun serializedboards (xmlnodes trav-flag)
     (if (null xmlnodes)
         ""
         (let* (
-               (game (car xmlnodes))
+               (board (car xmlnodes))
                (rest (cdr xmlnodes))
                (vulnerable
-                (xml-gettext (xml-getnode game "Vulnerable")))
+                (xml-gettext (xml-getnode board "Vulnerable")))
                (dealer
-                (xml-gettext (xml-getnode game "Dealer")))
+                (xml-gettext (xml-getnode board "Dealer")))
                (boardnum
-                (xml-gettext (xml-getnode game "BoardNo")))
+                (xml-gettext (xml-getnode board "BoardNo")))
                (hands
-                (xml-getnodes (xml-getnode game "Deal") "Hand"))
+                (xml-getnodes (xml-getnode board "Deal") "Hand"))
                (results
-                (xml-getnodes game "Result"))
+                (xml-getnodes board "Result"))
                )
-          (stringlist-append 
-           (list 
+          (concatenate 'string 
             *div-open-1*
             "board"
             *div-open-2*
@@ -251,20 +243,14 @@
             *div-close*
             (serializedhands hands vulnerable dealer)
             *div-close*
+            *tablehead*
             (if (eq trav-flag '1)
-                (serializedresults results *tablehead* *tabletail*)
+                (serializedresults results)
                 "")
-            (serializedboards rest trav-flag))))))
+            *tabletail*
+            (serializedboards rest trav-flag)))))
   
   
-  
-  ; stringlist-append (stringlist)
-  ; stringlist = list of strings
-  ; returns: the appended composite of all strings in stringlist
-  (defun stringlist-append (stringlist)
-    (if stringlist
-        (string-append (car stringlist) (stringlist-append (cdr stringlist)))
-        ""))
-  (export iBoard))
+  (export Iboard))
 
 
