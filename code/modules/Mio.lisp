@@ -12,29 +12,27 @@
   
   (include-book "io-utilities" :dir :teachpacks)
   
-  ;boards-no-trav (bntXML state) Given a duplicate bridge XML file, gets
-  ;the following information from each board listed in the XML file and 
-  ;creates an HTML page with this information formatted into tables:
-  ;Board numbers, dealer, vulnerable, and hands for each direction
+  ; boards-no-trav (bntXML state) Given a duplicate bridge XML file, gets
+  ; the following information from each board listed in the XML file and 
+  ; creates an HTML page with this information formatted into tables:
+  ; Board numbers, dealer, vulnerable, and hands for each direction
   (defun boards-no-trav (bntXML state)
-    (mv-let
-     (status state)
-     (string-list->file
-      (string-append "boards-no-trav" ".htm")
-      (list
-       *htmlhead*
-       (serializedboards 
-        (xml-getnodes (xml-getnode (xml-getnode 
-                      bntXML
-                      "Game") "HandRecords") "Board") '0)
-       *htmltail*
-       )
-      state)
-     (if (null status)
-         (mv 'ok state)
-         (mv 'error state))))
-  
-  
+    (mv-let (status state)
+            (string-list->file
+              (string-append "boards-no-trav" ".htm")
+              (list *htmlhead*
+                    (serializedboards 
+                      (xml-getnodes (xml-getnode (xml-getnode bntXML
+		                                              "Game")
+		                                 "HandRecords")
+		                    "Board")
+		      '0)
+                    *htmltail*)
+              state)
+    (if (null status)
+        (mv 'ok state)
+        (mv 'error state))))
+
   ;boards-trav (btXML state) Given a duplicate bridge XML file, gets the
   ;same information as boards-no-trav as well as the travelers information 
   ;for each board, which includes the total score and matchpoints for all 
