@@ -4,7 +4,7 @@
 #reader(planet "reader.ss" ("cce" "dracula.plt") "modular" "lang")
 #| Team Steele
    Software Engineering I
-   iPSC
+   Ipsc
 
    Interface for the Personal Score Card Module mPSC
 |#

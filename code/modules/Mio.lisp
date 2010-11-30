@@ -12,34 +12,32 @@
   
   (include-book "io-utilities" :dir :teachpacks)
   
-  ;boards-no-trav (bntXML state) Given a duplicate bridge XML file, gets
-  ;the following information from each board listed in the XML file and 
-  ;creates an HTML page with this information formatted into tables:
-  ;Board numbers, dealer, vulnerable, and hands for each direction
+  ; boards-no-trav (bntXML state) Given a duplicate bridge XML file, gets
+  ; the following information from each board listed in the XML file and 
+  ; creates an HTML page with this information formatted into tables:
+  ; Board numbers, dealer, vulnerable, and hands for each direction
   (defun boards-no-trav (bntXML state)
-    (mv-let
-     (status state)
-     (string-list->file
-      (string-append "boards-no-trav" ".htm")
-      (list
-       *htmlhead*
-       (serializedboards 
-        (xml-getnodes (xml-getnode (xml-getnode 
-                      bntXML
-                      "Game") "HandRecords") "Board") '0)
-       *htmltail*
-       )
-      state)
-     (if (null status)
-         (mv 'ok state)
-         (mv 'error state))))
-  
-  
-  ;boards-trav (btXML state) Given a duplicate bridge XML file, gets the
-  ;same information as boards-no-trav as well as the travelers information 
-  ;for each board, which includes the total score and matchpoints for all 
-  ;pairs at that board. Creates HTML page with this information with the 
-  ;board information and travelers information in separate tables.
+    (mv-let (status state)
+            (string-list->file
+              (string-append "boards-no-trav" ".htm")
+              (list *htmlhead*
+                    (serializedboards 
+                      (xml-getnodes (xml-getnode (xml-getnode bntXML
+		                                              "Game")
+		                                 "HandRecords")
+		                    "Board")
+		      '0)
+                    *htmltail*)
+              state)
+    (if (null status)
+        (mv 'ok state)
+        (mv 'error state))))
+
+  ; boards-trav (btXML state) Given a duplicate bridge XML file, gets the
+  ; same information as boards-no-trav as well as the travelers information
+  ; for each board, which includes the total score and matchpoints for all 
+  ; pairs at that board. Creates HTML page with this information with the 
+  ; board information and travelers information in separate tables.
   (defun boards-trav (btXML state)
     (mv-let
      (status state)
@@ -59,21 +57,22 @@
          (mv 'error state))))
   
   
-  ;rankings (rnkXML state) Given a duplicate bridge XML file, creates a 
-  ;rankings table in an HTML file including each pairs ranking and various 
-  ;other stats such as matchpoint and percentage score.
+  ; rankings (rnkXML state) Given a duplicate bridge XML file, creates a 
+  ; rankings table in an HTML file including each pairs ranking and various
+  ; other stats such as matchpoint and percentage score.
   (defun rankings (rnkXML state) rnkXML)
   
   
-  ;personal-score-cards (pscXML state) Given a duplicate bridge XML file,
-  ;creates an HTML file containing personal score cards for each pair, which
-  ;includes information about each match they played an against whom.
+  ; personal-score-cards (pscXML state) Given a duplicate bridge XML file,
+  ; creates an HTML file containing personal score cards for each pair,
+  ; which includes information about each match they played an against
+  ; whom.
   (defun personal-score-cards (pscXML state) pscXML)
 
-  ;main (bridgeXML state) Given a duplicate bridge XML file, extracts
-  ;appropriate information to create four 
-  ;HTML pages that link together: boards, boards with travelers, rankings,
-  ;and personal score card webpages.
+  ; main (bridgeXML state) Given a duplicate bridge XML file, extracts
+  ; appropriate information to create four HTML pages that link together:
+  ; boards, boards with travelers, rankings, and personal score card
+  ; webpages.
   (defun main (bridgeXML state)
     (mv-let (contents status state)
           (file->string (string-append bridgeXML ".xml") state)
