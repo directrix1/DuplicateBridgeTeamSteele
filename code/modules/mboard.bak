@@ -144,26 +144,21 @@
              (mv-let 
               (ns ew)
               (getseparateresults rest boardnum ns1 ew1)
-              (let
-                  ((nskv (assoc-equal (mv pairns section) ns))
-                   (ewkv (assoc-equal (mv pairew section) ew)))
-              (mv
+              (mv 
                (cons (cons (mv pairns section)
                        (cons 
                          (mv boardnum pairew
                              (if (string-equal totaldir "N-S")
                                  totalscorenode (string-append "-" totalscorenode))
                              pointsns)
-                         (cdr nskv))) 
-                         (remove-equal nskv ns))
+                         (cdr (assoc-equal (mv pairns section) ns)))) ns) ;FIXME
                (cons (cons (mv pairew section)
                        (cons
                          (mv boardnum pairns
                              (if (string-equal totaldir "E-W")
                                  totalscorenode (string-append "-" totalscorenode))
                              pointsew)
-                         (cdr ewkv)))
-                         (remove-equal ewkv ew))))))))
+                         (cdr (assoc-equal (mv pairew section) ew)))) ew)))))) ;FIXME
   
   ; getallseparateresults (xmlnodes) → converts xmlnodes, a sequence of
   ; board nodes, to a sequence of FIXME 
