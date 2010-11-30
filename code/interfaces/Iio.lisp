@@ -9,7 +9,7 @@
 |#
 
 
-(interface iio
+(interface Iio
 
   ;main(bridgeXML state) Given a duplicate bridge XML file, extracts
   ;appropriate information to create four 
@@ -21,7 +21,7 @@
   ;the following information from each board listed in the XML file and 
   ;creates an HTML page with this information formatted into tables:
   ;Board numbers, dealer, vulnerable, and hands for each direction
-  (sig boards-no-trav(bridgeXML state))
+  (sig boards-no-trav (bridgeXML state))
   
   
   ;boards-trav(bridgeXML state) Given a duplicate bridge XML file, gets the
@@ -29,13 +29,13 @@
   ;for each board, which includes the total score and matchpoints for all 
   ;pairs at that board. Creates HTML page with this information with the 
   ;board information and travelers information in separate tables.
-  (sig boards-trav(bridgeXML state))
+  (sig boards-trav (bridgeXML state))
   
   
   ;rankings(bridgeXML state) Given a duplicate bridge XML file, creates a 
   ;rankings table in an HTML file including each pairs ranking and various 
   ;other stats such as matchpoint and percentage score.
-  (sig rankings(bridgeXML state))
+  (sig rankings (bridgeXML state))
   
   
   ;personal-score-cards(bridgeXML state) Given a duplicate bridge XML file,

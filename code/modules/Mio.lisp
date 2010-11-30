@@ -6,8 +6,8 @@
 (require "../interfaces/Iboard.lisp")
 (require "../interfaces/Ixmlminidom.lisp")
 
-(module mio
-  (import iboard)
+(module Mio
+  (import Iboard)
   (import Ixmlminidom)
   
   (include-book "io-utilities" :dir :teachpacks)
@@ -88,4 +88,4 @@
               (mv 'ok (cadr psc)))
               (mv 'error state))))
   
-  (export iio))
+  (export Iio))

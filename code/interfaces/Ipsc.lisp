@@ -13,7 +13,7 @@
 
 (in-package "ACL2")
 
-(interface iPSC
+(interface Ipsc
   
   (include-book "io-utilities" :dir :teachpacks)
   (include-book "list-utilities" :dir :teachpacks)
@@ -25,20 +25,20 @@
   ;XMLnodes format: Nodes format
   ;Output format: String, HTML formatted text comprising the score card
   ;    for one player pair
-  (sig getPSC(xmlnodes))
+  (sig getPSC (xmlnodes))
   
   ;Pulls the Name Strings for a given Pair ID
   ;PairID format: (String Direction, String SectionNumber)
   ;Data format: Nodes format
   ;Output format: (String String), Names of the two players
-  (sig getNameForID(pairid data))
+  (sig getNameForID (pairid data))
   
   ;Pulls the match results for a given Pair ID
   ;PairID format: (String Direction, String SectionNumber)
   ;Results format: ?
   ;Output format: String, HTML formatted text comprising all the boards
   ;    for one player pair
-  (sig getBoardsForPair(pairid results))
+  (sig getBoardsForPair (pairid results))
   
   (con getPSC-con1
        (implies ()

@@ -54,7 +54,7 @@
   (defconst *tabletail* "</table>\n")
   
   
-(interface iBoard
+(interface Iboard
   
   
   ;(include-book "basiclex")
