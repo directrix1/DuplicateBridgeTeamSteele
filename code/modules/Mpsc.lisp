@@ -18,6 +18,14 @@
   (include-book "io-utilities" :dir :teachpacks)
   (include-book "list-utilities" :dir :teachpacks)
   
+  
+  
+  
+  
+  
+  
+  
+  
   ;Pulls the Personal Score Card data for all players, and put's them all
   ;into html table format
   ;XMLnodes format: Nodes format
