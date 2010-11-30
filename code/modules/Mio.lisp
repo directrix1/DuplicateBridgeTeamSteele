@@ -39,24 +39,19 @@
   ; pairs at that board. Creates HTML page with this information with the 
   ; board information and travelers information in separate tables.
   (defun boards-trav (btXML state)
-    (mv-let
-     (status state)
-     (string-list->file
-      (string-append "boards-trav" ".htm")
-      (list
-       *htmlhead*
-       (serializedboards 
-        (xml-getnodes (xml-getnode (xml-getnode 
-                      btXML
-                      "Game") "HandRecords") "Board") '1)
-       *htmltail*
-       )
-      state)
-     (if (null status)
-         (mv 'ok state)
-         (mv 'error state))))
-  
-  
+    (let* (boardnode (xml-getnodes (xml-getnode (xml-getnode btXML "Game")
+                                                "HandRecords")
+                                   "Board"))
+      (mv-let (status state)
+              (string-list->file (string-append "boards-trav" ".htm")
+                                 (list *htmlhead*
+				       (serializedboards boardnode '1)
+                                       *htmltail*)
+                                 state)
+              (if (null status)
+                  (mv 'ok state)
+                  (mv 'error state)))))
+
   ; rankings (rnkXML state) Given a duplicate bridge XML file, creates a 
   ; rankings table in an HTML file including each pairs ranking and various
   ; other stats such as matchpoint and percentage score.
