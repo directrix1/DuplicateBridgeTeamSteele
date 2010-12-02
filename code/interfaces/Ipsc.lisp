@@ -33,12 +33,20 @@
   ;Output format: (String String), Names of the two players
   (sig getNameForID (pairid data))
   
+  ;;;
+  ;;;
+  (sig getBoardForPair(rbrds))
+  
   ;Pulls the match results for a given Pair ID
   ;PairID format: (String Direction, String SectionNumber)
   ;Results format: ?
   ;Output format: String, HTML formatted text comprising all the boards
   ;    for one player pair
-  (sig getBoardsForPair (pairid results))
+  (sig getBoardsForPair (pairid section results))
+  
+  ;;;
+  ;;;
+  (sig getAllPairs (results rankings))
   
   (con getPSC-con1
        (implies ()
