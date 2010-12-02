@@ -26,22 +26,23 @@
   ;PairID format: (String Direction, String SectionNumber)
   ;Data format: Nodes format
   ;Output format: (String String), Names of the two players
-  (defun getNameForID (pairid data)
-    ())
+  (defun getNameForID (pairid data) nil)
   
   ;;;
   ;;;
   (defun getBoardForPair (rbrds)
-    (let* ((sbrd (car rbrds))
-           (rest (cdr rbrds)))
-    (concatenate 'string
+    (if (null rbrds)
+        ""
+        (let* ((sbrd (car rbrds))
+               (rest (cdr rbrds)))
+          (concatenate 'string
               "<tr>"
               "<td>"               (first sbrd)  "</td>"    ; boardnum
               "<td colspan=\"2\">" (second sbrd) "</td>"    ; vs. info
               "<td>"               (third sbrd)  "</td>"    ; score
               "<td>"               (fourth sbrd) "</td>"    ; matchpoints
               "</tr>"
-            (getBoardForPair rest))))
+            (getBoardForPair rest)))))
     
   ;Pulls the match results for a given Pair ID
   ;PairID format: (String Direction, String SectionNumber)
@@ -86,7 +87,7 @@
   ;Output format: String, HTML formatted text comprising the score card
   ;    for one player pair
   (defun serializedPSC (xmlnodes)
-    (let* ((results (getAllSeparateResults (xmlnodes))))
+    (let* ((results (getAllSeparateResults xmlnodes)))
                    (getAllPairs results nil)))
     
   
