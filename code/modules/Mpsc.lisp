@@ -82,17 +82,17 @@
            (restew (cdr ew)))
     (if (equal nextns nil)
         (concatenate 'string
-                     ;*htmlhead*
+                     *psctablehead*
                      ;get info from rankings
                      (getBoardsForPair (car keyew) (cadr keyew) ew)
-                     ;*htmltail*
+                     *psctabletail*
                      (getAllPairs (list restns restew) rankings)
                      )
         (concatenate 'string
-                     ;*htmlhead*
+                     *psctablehead*
                      ;get info from rankings
                      (getBoardsForPair (car keyns) (cadr keyns) ns)
-                     ;*htmltail*
+                     *psctabletail*
                      (getAllPairs (list restns restew) rankings)))))
     
   
