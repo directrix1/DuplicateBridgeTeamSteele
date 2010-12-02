@@ -10,4 +10,5 @@
   (defun getrankings (rankingnodes)
     )
   (defun getcontestants (section dir id rankingnodes)
-    ))
+    )
+  (export Irankings))
