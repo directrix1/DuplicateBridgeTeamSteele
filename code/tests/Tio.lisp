@@ -12,6 +12,6 @@
 
 
 (link Test
-      (Mio Mbasiclex Mboard Mpsc Mrankings Mxmlminidom))
+      (Mbasiclex Mxmlminidom Mboard Mrankings Mpsc Mio))
 
 (invoke Test)
