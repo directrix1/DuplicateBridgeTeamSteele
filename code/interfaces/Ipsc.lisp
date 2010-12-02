@@ -22,10 +22,7 @@
 (defconst *psctabletail* "</table>\n")
 
 (interface Ipsc
-  
-  (include-book "io-utilities" :dir :teachpacks)
-  (include-book "list-utilities" :dir :teachpacks)
-  (include "Ixmlminidom")
+  (include Ixmlminidom)
   
   
   ;Pulls the Personal Score Card data for all players, and put's them all

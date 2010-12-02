@@ -36,20 +36,19 @@
   ;Output format: String, HTML formatted text comprising the score card
   ;    for one player pair
   (defun getPSC(xmlnodes)
-    (let* ((results (getallseparateresults (xmlnodes)))
+    (let* ((results (getallseparateresults (xmlnodes)))) ()))
   
   ;Pulls the Name Strings for a given Pair ID
   ;PairID format: (String Direction, String SectionNumber)
   ;Data format: Nodes format
   ;Output format: (String String), Names of the two players
-  (defun getNameForID(pairid data)
-    ())
+  (defun getNameForID(pairid data) ())
   
   ;;;
   ;;;
   (defun getBoardForPair(rbrds)
     (let* ((sbrd (cdar rbrds))
-           (rest (cddr rbrds))))
+           (rest (cddr rbrds)))
     (concatenate 'string
               "<tr>"
               "<td>" (first sbrd) "</td>"
@@ -57,7 +56,7 @@
               "<td>" (third sbrd) "</td>"
               "<td>" (fourth sbrd) "</td>"
               "</tr>"
-            (getBoardForPair rest)))
+            (getBoardForPair rest))))
     
   ;Pulls the match results for a given Pair ID
   ;PairID format: (String Direction, String SectionNumber)
@@ -65,8 +64,8 @@
   ;Output format: String, HTML formatted text comprising all the boards
   ;    for one player pair
   (defun getBoardsForPair(pairid section results) ;NOTE Direction decided in getPSC or above
-    (let* ((bforp (assoc-equal (mv pairid section) results))))
-    (getBoardForPair bforp))
+    (let* ((bforp (assoc-equal (mv pairid section) results)))
+    (getBoardForPair bforp)))
   
   ;;;
   ;;;
@@ -78,7 +77,7 @@
            (nextew (car ew))
            (keyew (car nextew))
            (restns (cdr ns))
-           (restew (cdr ew))))
+           (restew (cdr ew)))
     (if (equal nextns nil)
         (concatenate 'string
                      *psctablehead*
@@ -92,8 +91,7 @@
                      ;get info from rankings
                      (getBoardsForPair (car keyns) (cadr keyns) ns)
                      *psctabletail*
-                     (getAllPairs (list restns restew) rankings)
-                     )))
+                     (getAllPairs (list restns restew) rankings)))))
     
   
   (export Ipsc))
