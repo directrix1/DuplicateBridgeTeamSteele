@@ -248,11 +248,14 @@
             *div-close*
             (serializedhands hands vulnerable dealer)
             *div-close*
-            *tablehead*
+            
             (if (equal trav-flag 1)
-                (serializedresults results)
+                (concatenate 'string
+                             *tablehead*
+                             (serializedresults results)
+                             *tabletail*)
                 "")
-            *tabletail*
+            
             (serializedboards rest trav-flag)))))
   
   
