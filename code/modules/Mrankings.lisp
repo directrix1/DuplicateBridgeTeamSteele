@@ -7,8 +7,16 @@
 
 (module Mrankings
   (import Ixmlminidom)
+  ; XXX rankingnodes is a bad misnomer.  rankingnodes should definitely
+  ; *not* be a list of Rankings nodes.  At a minimum, we need the Section
+  ; nodes, too.
   (defun getrankings (rankingnodes)
     nil)
+  ; Approach, use xml-getnodes on rankingnodes in a BFS fashion until we
+  ; hit the Section nodes.  Start trying to find the Section node whose
+  ; SectionLabel and Direction attributes match section and dir,
+  ; respectively.  Use xml-getnodes for Contestants on that section, and
+  ; find the Contestants node whose ID attribute matches id....
   (defun getcontestants (section dir id rankingnodes)
     nil)
   (export Irankings))
