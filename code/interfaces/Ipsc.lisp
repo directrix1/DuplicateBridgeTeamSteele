@@ -11,7 +11,15 @@
 
 (require "Ixmlminidom.lisp")
 
-(in-package "ACL2")
+(defconst *psctablehead*
+    (concatenate 'string
+      "<table class=\"psc\"><tr>"
+      "<th>Brd</th>"
+      "<th colspan=\"2\">Versus</th>"
+      "<th>Score</th>"
+      "<th>Match Points</th>"
+      "</tr><tr>"))
+(defconst *psctabletail* "</table>\n")
 
 (interface Ipsc
   
