@@ -249,7 +249,7 @@
             (serializedhands hands vulnerable dealer)
             *div-close*
             *tablehead*
-            (if (eq trav-flag '1)
+            (if (equal trav-flag 1)
                 (serializedresults results)
                 "")
             *tabletail*

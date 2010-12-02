@@ -26,7 +26,7 @@
 		                                              "Game")
 		                                 "HandRecords")
 		                    "Board")
-		      '0)
+		      0)
                     *htmltail*)
               state)
     (if (null status)
@@ -46,7 +46,7 @@
       (mv-let (status state)
               (string-list->file (string-append "boards-trav" ".htm")
                                  (list *htmlhead*
-				       (serializedboards boardnode '1)
+				       (serializedboards boardnode 1)
                                        *htmltail*)
                                  state)
               (if (null status)

@@ -15,3 +15,7 @@
       (Mbasiclex Mxmlminidom Mboard Mrankings Mpsc Mio))
 
 (invoke Test)
+
+(set-state-ok t)
+
+(main "051115A" state)
