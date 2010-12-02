@@ -84,7 +84,7 @@
   ;getresults (xmlnodes prefix postfix) → returns a string consisting of
   ; the concatenation of prefix, results table rows from each “Result” node,
   ; and postfix
-  (sig serializedresults (xmlnodes prefix postfix))
+  (sig serializedresults (xmlnodes))
   (con serializedresults-nil=string-append-prefix-postfix-thm
     (implies (and (stringp prefix) (stringp postfix))
              (string-equal (serializedresults nil prefix postfix)
