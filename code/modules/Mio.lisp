@@ -56,14 +56,14 @@
   ; rankings (rnkXML state) Given a duplicate bridge XML file, creates a 
   ; rankings table in an HTML file including each pairs ranking and various
   ; other stats such as matchpoint and percentage score.
-  (defun rankings (rnkXML state) rnkXML)
+  (defun rankings (rnkXML state) (mv nil state))
   
   
   ; personal-score-cards (pscXML state) Given a duplicate bridge XML file,
   ; creates an HTML file containing personal score cards for each pair,
   ; which includes information about each match they played an against
   ; whom.
-  (defun personal-score-cards (pscXML state) pscXML)
+  (defun personal-score-cards (pscXML state) (mv nil state))
 
   ; main (bridgeXML state) Given a duplicate bridge XML file, extracts
   ; appropriate information to create four HTML pages that link together:
