@@ -14,9 +14,9 @@
 (require "modules/Mpsc.lisp")
 (require "modules/Mboard.lisp")
 (require "modules/Mio.lisp")
-;(require "modules/Mrankings.lisp")
+(require "modules/Mrankings.lisp")
 
 (link Rbridge 
-      (Mbasiclex Mxmlminidom Mpsc Mboard Mio))
+      (Mbasiclex Mxmlminidom Mboard Mrankings Mpsc Mio))
 
 (invoke Rbridge)
