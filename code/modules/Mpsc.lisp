@@ -16,9 +16,9 @@
 
 (module Mpsc
   (import Iboard)
+  (import Ixmlminidom)
   (import Irankings)
   (import Ibasiclex)
-  (import Ixmlminidom)
   (include-book "io-utilities" :dir :teachpacks)
   (include-book "list-utilities" :dir :teachpacks)
   
@@ -66,8 +66,8 @@
   ;Output format: String, HTML formatted text comprising all the boards
   ;    for one player pair
   (defun getBoardsForPair(pairid section results) ;NOTE Direction decided in getPSC or above
-    (let* ((bforp (assoc-equal (mv pairid section) results))))
-    (getBoardForPair bforp))
+    (let* ((bforp (assoc-equal (mv pairid section) results)))
+    (getBoardForPair bforp)))
   
   ;;;
   ;;;
@@ -79,7 +79,7 @@
            (nextew (car ew))
            (keyew (car nextew))
            (restns (cdr ns))
-           (restew (cdr ew))))
+           (restew (cdr ew)))
     (if (equal nextns nil)
         (concatenate 'string
                      ;*htmlhead*
@@ -93,8 +93,7 @@
                      ;get info from rankings
                      (getBoardsForPair (car keyns) (cadr keyns) ns)
                      ;*htmltail*
-                     (getAllPairs (list restns restew) rankings)
-                     )))
+                     (getAllPairs (list restns restew) rankings)))))
     
   
   (export Ipsc))

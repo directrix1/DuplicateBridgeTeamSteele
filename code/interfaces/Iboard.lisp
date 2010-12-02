@@ -97,11 +97,6 @@
   ; “results” tables from the xmlnode “Board” and “results” formatted to
   ; be rendered with the deal and results as required by description
   (sig serializedboards (xmlnodes trav-flag))
-  
-  ; stringlist-append (stringlist)
-  ; stringlist = list of strings
-  ; returns: the appended composite of all strings in stringlist
-  (sig stringlist-append (stringlist))
-  )
+)
   
   

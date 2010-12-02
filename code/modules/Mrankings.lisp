@@ -8,7 +8,7 @@
 (module Mrankings
   (import Ixmlminidom)
   (defun getrankings (rankingnodes)
-    )
+    nil)
   (defun getcontestants (section dir id rankingnodes)
-    )
+    nil)
   (export Irankings))
