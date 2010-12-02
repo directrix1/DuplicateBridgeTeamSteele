@@ -36,7 +36,8 @@
   ;Output format: String, HTML formatted text comprising the score card
   ;    for one player pair
   (defun getPSC(xmlnodes)
-    (let* ((results (getallseparateresults (xmlnodes)))
+    (let* ((results (getallseparateresults (xmlnodes))))
+      ()))
   
   ;Pulls the Name Strings for a given Pair ID
   ;PairID format: (String Direction, String SectionNumber)
@@ -49,7 +50,7 @@
   ;;;
   (defun getBoardForPair(rbrds)
     (let* ((sbrd (cdar rbrds))
-           (rest (cddr rbrds))))
+           (rest (cddr rbrds)))
     (concatenate 'string
               "<tr>"
               "<td>" (first sbrd) "</td>"
@@ -57,7 +58,7 @@
               "<td>" (third sbrd) "</td>"
               "<td>" (fourth sbrd) "</td>"
               "</tr>"
-            (getBoardForPair rest)))
+            (getBoardForPair rest))))
     
   ;Pulls the match results for a given Pair ID
   ;PairID format: (String Direction, String SectionNumber)

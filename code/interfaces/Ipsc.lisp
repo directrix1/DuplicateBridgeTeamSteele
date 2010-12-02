@@ -11,13 +11,9 @@
 
 (require "Ixmlminidom.lisp")
 
-(in-package "ACL2")
-
 (interface Ipsc
   
-  (include-book "io-utilities" :dir :teachpacks)
-  (include-book "list-utilities" :dir :teachpacks)
-  (include "Ixmlminidom")
+  (include Ixmlminidom)
   
   
   ;Pulls the Personal Score Card data for all players, and put's them all
@@ -47,7 +43,7 @@
   ;;;
   ;;;
   (sig getAllPairs (results rankings))
-  
+  #|
   (con getPSC-con1
        (implies ()
                 ()))
@@ -66,3 +62,5 @@
   (con getBoardsForPair-con1
        (implies ()
                 ())))
+  |#
+  )
