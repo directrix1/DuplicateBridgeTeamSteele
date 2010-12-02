@@ -39,10 +39,9 @@
   ; pairs at that board. Creates HTML page with this information with the 
   ; board information and travelers information in separate tables.
   (defun boards-trav (btXML state)
-    (let* (
-           (boardnode (xml-getnodes (xml-getnode (xml-getnode btXML "Game")
+    (let* (boardnode (xml-getnodes (xml-getnode (xml-getnode btXML "Game")
                                                 "HandRecords")
-                                   "Board")))
+                                   "Board"))
       (mv-let (status state)
               (string-list->file (string-append "boards-trav" ".htm")
                                  (list *htmlhead*
