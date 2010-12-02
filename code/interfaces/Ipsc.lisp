@@ -13,7 +13,7 @@
 
 (defconst *psctablehead*
     (concatenate 'string
-      "<table class=\"psc\"><tr>"
+      "<table class=\"results\"><tr>"
       "<th>Brd</th>"
       "<th colspan=\"2\">Versus</th>"
       "<th>Score</th>"
@@ -31,7 +31,7 @@
   ;XMLnodes format: Nodes format
   ;Output format: String, HTML formatted text comprising the score card
   ;    for one player pair
-  (sig getPSC (xmlnodes))
+  (sig serializedPSC (xmlnodes))
   
   ;Pulls the Name Strings for a given Pair ID
   ;PairID format: (String Direction, String SectionNumber)

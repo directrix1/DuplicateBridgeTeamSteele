@@ -22,41 +22,24 @@
   (include-book "io-utilities" :dir :teachpacks)
   (include-book "list-utilities" :dir :teachpacks)
   
-  
-  
-  
-  
-  
-  
-  
-  
-  ;Pulls the Personal Score Card data for all players, and put's them all
-  ;into html table format
-  ;XMLnodes format: Nodes format
-  ;Output format: String, HTML formatted text comprising the score card
-  ;    for one player pair
-  (defun getPSC(xmlnodes)
-    (let* ((results (getallseparateresults (xmlnodes))))
-      ()))
-  
   ;Pulls the Name Strings for a given Pair ID
   ;PairID format: (String Direction, String SectionNumber)
   ;Data format: Nodes format
   ;Output format: (String String), Names of the two players
-  (defun getNameForID(pairid data)
+  (defun getNameForID (pairid data)
     ())
   
   ;;;
   ;;;
-  (defun getBoardForPair(rbrds)
-    (let* ((sbrd (cdar rbrds))
-           (rest (cddr rbrds)))
+  (defun getBoardForPair (rbrds)
+    (let* ((sbrd (car rbrds))
+           (rest (cdr rbrds)))
     (concatenate 'string
               "<tr>"
-              "<td>" (first sbrd) "</td>"
-              "<td>" (second sbrd) "</td>"
-              "<td>" (third sbrd) "</td>"
-              "<td>" (fourth sbrd) "</td>"
+              "<td>"               (first sbrd)  "</td>"    ; boardnum
+              "<td colspan=\"2\">" (second sbrd) "</td>"    ; vs. info
+              "<td>"               (third sbrd)  "</td>"    ; score
+              "<td>"               (fourth sbrd) "</td>"    ; matchpoints
               "</tr>"
             (getBoardForPair rest))))
     
@@ -65,9 +48,9 @@
   ;Results format: ?
   ;Output format: String, HTML formatted text comprising all the boards
   ;    for one player pair
-  (defun getBoardsForPair(pairid section results) ;NOTE Direction decided in getPSC or above
+  (defun getBoardsForPair (pairid section results)
     (let* ((bforp (assoc-equal (mv pairid section) results)))
-    (getBoardForPair bforp)))
+    (getBoardForPair (cdr bforp))))
   
   ;;;
   ;;;
@@ -80,20 +63,31 @@
            (keyew (car nextew))
            (restns (cdr ns))
            (restew (cdr ew)))
-    (if (equal nextns nil)
-        (concatenate 'string
+      (if (null nextew)
+          ""
+          (if (null nextns)
+              (concatenate 'string
                      *psctablehead*
                      ;get info from rankings
                      (getBoardsForPair (car keyew) (cadr keyew) ew)
                      *psctabletail*
-                     (getAllPairs (list restns restew) rankings)
+                     (getAllPairs (mv ns restew) rankings)
                      )
-        (concatenate 'string
+              (concatenate 'string
                      *psctablehead*
                      ;get info from rankings
                      (getBoardsForPair (car keyns) (cadr keyns) ns)
                      *psctabletail*
-                     (getAllPairs (list restns restew) rankings)))))
+                     (getAllPairs (mv restns ew) rankings))))))
+  
+  ;Pulls the Personal Score Card data for all players, and put's them all
+  ;into html table format
+  ;XMLnodes format: Nodes format
+  ;Output format: String, HTML formatted text comprising the score card
+  ;    for one player pair
+  (defun serializedPSC (xmlnodes)
+    (let* ((results (getAllSeparateResults (xmlnodes))))
+                   (getAllPairs results nil)))
     
   
   (export Ipsc))

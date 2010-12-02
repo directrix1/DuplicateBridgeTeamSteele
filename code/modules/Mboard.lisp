@@ -152,7 +152,7 @@
                        (cons 
                          (mv boardnum pairew
                              (if (string-equal totaldir "N-S")
-                                 totalscorenode (string-append "-" totalscorenode))
+                                 totalscore (string-append "-" totalscore))
                              pointsns)
                          (cdr nskv))) 
                          (remove-equal nskv ns))
@@ -160,7 +160,7 @@
                        (cons
                          (mv boardnum pairns
                              (if (string-equal totaldir "E-W")
-                                 totalscorenode (string-append "-" totalscorenode))
+                                 totalscore (string-append "-" totalscore))
                              pointsew)
                          (cdr ewkv)))
                          (remove-equal ewkv ew))))))))
