@@ -60,7 +60,19 @@
   ; rankings (rnkXML state) Given a duplicate bridge XML file, creates a 
   ; rankings table in an HTML file including each pairs ranking and various
   ; other stats such as matchpoint and percentage score.
-  (defun rankings (rnkXML state) (mv nil state))
+  (defun rankings (rnkXML state)
+    (let* (
+           (sections (xml-getnodes (xml-getnode rnkXML "Game")
+                                                "Section")))
+      (mv-let (status state)
+              (string-list->file (string-append "rnk" ".htm")
+                                 (list *htmlhead*
+				       (serializedRankings sections)
+                                       *htmltail*)
+                                 state)
+              (if (null status)
+                  (mv 'ok state)
+                  (mv 'error state)))))
   
   
   ; personal-score-cards (pscXML state) Given a duplicate bridge XML file,

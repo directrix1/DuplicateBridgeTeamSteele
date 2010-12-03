@@ -261,15 +261,17 @@
   
   ;xml-gettext (node) → returns the composite of all text inside of a node
   (defun xml-gettext (node)
-    (if (= (length (caddr node)) 0)
+    (if (null node)
         ""
-        (let ((curnode (car (caddr node)))
-              (rest (cdr (caddr node))))
-          (if (equal (car curnode) 'text)
-              (string-append (caddr curnode)
-                             (xml-gettext (mv nil nil rest)))
-              (string-append (xml-gettext curnode)
-                             (xml-gettext (mv nil nil rest)))))))
+        (if (= (length (caddr node)) 0)
+            ""
+            (let ((curnode (car (caddr node)))
+                  (rest (cdr (caddr node))))
+              (if (equal (car curnode) 'text)
+                  (string-append (caddr curnode)
+                                 (xml-gettext (mv nil nil rest)))
+                  (string-append (xml-gettext curnode)
+                                 (xml-gettext (mv nil nil rest))))))))
   
   ;xml-isattribute (attribute) → returns true iff attribute is an mv of
   ;  length 2 with both elements of the mv being strings

@@ -4,9 +4,34 @@
 #reader(planet "reader.ss" ("cce" "dracula.plt") "modular" "lang")
 (require "Ixmlminidom.lisp")
 
+(defconst *rktablehead*
+  (concatenate 'string
+  "<table class=\"results\">"
+  "<tr>"
+  "<th rowspan=\"2\">Pair No.</th>"
+  "<th rowspan=\"2\">Players</th>"
+  "<th rowspan=\"2\">Strat / Flight</th>"
+  "<th colspan=\"3\">Section Rank</th>"
+  "<th colspan=\"3\">Overall Rank</th>"
+  "<th rowspan=\"2\">Matchpoint Score</th>"
+  "<th rowspan=\"2\">Percentage Score</th>"
+  "<th rowspan=\"2\">Masterpoint Award</th>"  
+  "</tr>"
+  "<tr>"
+  "<th>A</th>"
+  "<th>B</th>"
+  "<th>C</th>"
+  "<th>A</th>"
+  "<th>B</th>"
+  "<th>C</th>"
+  "</tr>"
+  ))
+(defconst *rktabletail*
+  "</table>")
+
 (interface Irankings
   (include Ixmlminidom)
-  (sig getrankings (rankingnodes))
+  (sig serializedrankings (rankingnodes))
   (sig getcontestants (section dir id rankingnodes))
   (con getrankings-delivers-string
     (implies (xml-isnodelist rankingnodes)

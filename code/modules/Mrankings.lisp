@@ -7,11 +7,124 @@
 
 (module Mrankings
   (import Ixmlminidom)
+  
+  (include-book "io-utilities" :dir :teachpacks)
+  
+  ; Gets the matchpointtotal for a contestant as a rational
+  (defun getmatchpointtotal (node)
+    (str->rat (xml-gettext (xml-getnode node "MatchPointTotal"))))
+  
+  ; Insert function adapted from *site*
+  (defun insert-sorted (a lst)
+    (if (or (endp lst)
+            (>= (getmatchpointtotal a)
+                (getmatchpointtotal (car lst))))
+        (cons a lst)
+        (cons (car lst) (insert-sorted a (cdr lst)))))
+
+  ; This function sorts the contestants by MatchPointTotal
+  (defun sortcontestants (unsortedcontestants)
+    (if (null unsortedcontestants)
+        nil
+        (let* (
+               (contestant (car unsortedcontestants))
+               (rest (cdr unsortedcontestants))
+               )
+          (insert-sorted contestant (sortcontestants rest)))))
+  
+  (defun sortmvranks (ranks mvs)
+    (if (null ranks)
+        mvs
+        (let (
+              (rank (car ranks))
+              (rest (cdr ranks))
+              )
+          (mv-let
+           (a b c)
+           mvs
+           (sortmvranks
+            rest
+            (mv
+             (if (equal (xml-getattribute rank "Strat") "A")
+                 (xml-gettext rank)
+                 a)
+             (if (equal (xml-getattribute rank "Strat") "B")
+                 (xml-gettext rank)
+                 b)
+             (if (equal (xml-getattribute rank "Strat") "C")
+                 (xml-gettext rank)
+                 c)))))))
+  
+  (defun serializedcontestants (contestants)
+    (if (null contestants)
+        ""
+        (let* (
+            (contestant (car contestants))
+            (rest (cdr contestants))
+            (pairno (xml-getattribute contestant "ID"))
+            (players (xml-getnodes contestant "Player"))
+            (player1 (xml-gettext (xml-getnode (car players) "Name")))
+            (player2 (xml-gettext (xml-getnode (cadr players) "Name")))
+            (strat (xml-getattribute contestant "Strat"))
+            (sectionranks (xml-getnodes contestant "SectionRank"))
+            (overallranks (xml-getnodes contestant "OverallRank"))
+            (matchpoint (xml-gettext
+                         (xml-getnode contestant "MatchpointTotal")))
+            (percentage (xml-gettext
+                         (xml-getnode contestant "Percentage")))
+            (mpvalue (xml-gettext (xml-getnode contestant "Award")))
+            (masterpoint (if (equal mpvalue "")
+                             "&nbsp;"
+                             mpvalue))
+            )
+          (concatenate 'string
+                       "<tr>"
+                       "<td>" pairno "</td>"
+                       "<td>" player1 " - " player2 "</td>"
+                       "<td>" strat "</td>"
+                       (mv-let
+                        (a b c)
+                        (sortmvranks sectionranks
+                                     (mv "&nbsp;" "&nbsp;" "&nbsp;" ))
+                        (concatenate 'string
+                                     "<td>" a "</td>"
+                                     "<td>" b "</td>"
+                                     "<td>" c "</td>"))
+                       (mv-let
+                        (a b c)
+                        (sortmvranks overallranks
+                                     (mv "&nbsp;" "&nbsp;" "&nbsp;" ))
+                        (concatenate 'string
+                                     "<td>" a "</td>"
+                                     "<td>" b "</td>"
+                                     "<td>" c "</td>"))
+                       "<td>" matchpoint "</td>"
+                       "<td>" percentage "</td>"
+                       "<td>" masterpoint "</td>"
+                       "</tr>"
+                       (serializedcontestants rest)
+                       ))))
+  
   ; XXX rankingnodes is a bad misnomer.  rankingnodes should definitely
   ; *not* be a list of Rankings nodes.  At a minimum, we need the Section
   ; nodes, too.
-  (defun getrankings (rankingnodes)
-    nil)
+  (defun serializedrankings (rankingnodes)
+    (if (null rankingnodes)
+        ""
+        (let* (
+               (ranking (car rankingnodes))
+               (rest (cdr rankingnodes))
+               (unsortedcontestants (xml-getnodes
+                                     (xml-getnode ranking "Rankings")
+                                     "Contestants"))
+               (contestanthtml (serializedcontestants
+                                (sortcontestants unsortedcontestants)))
+               )
+          (concatenate 'string
+                       *rktablehead*
+                       contestanthtml
+                       *rktabletail*
+                       (serializedrankings rest)))))
 
   ; Given a list of nodes, glue all nodes' children together in one big
   ; list; i.e., if the nodes are rooted in some tree where they're at depth
