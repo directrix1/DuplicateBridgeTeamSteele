@@ -20,3 +20,7 @@
       (Mbasiclex Mxmlminidom Mboard Mrankings Mpsc Mio))
 
 (invoke Rbridge)
+
+(set-state-ok t)
+
+(main "testfiles/051115A" state)

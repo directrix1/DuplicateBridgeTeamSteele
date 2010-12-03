@@ -4,11 +4,15 @@
 #reader(planet "reader.ss" ("cce" "dracula.plt") "modular" "lang")
 (require "../interfaces/Iio.lisp")
 (require "../interfaces/Iboard.lisp")
+(require "../interfaces/Ipsc.lisp")
+(require "../interfaces/Irankings.lisp")
 (require "../interfaces/Ixmlminidom.lisp")
 
 (module Mio
-  (import Iboard)
   (import Ixmlminidom)
+  (import Iboard)
+  (import Irankings)
+  (import Ipsc)
   
   (include-book "io-utilities" :dir :teachpacks)
   
@@ -63,7 +67,20 @@
   ; creates an HTML file containing personal score cards for each pair,
   ; which includes information about each match they played an against
   ; whom.
-  (defun personal-score-cards (pscXML state) (mv nil state))
+  (defun personal-score-cards (pscXML state)
+    (let* (
+           (boardnodes (xml-getnodes (xml-getnode (xml-getnode pscXML "Game")
+                                                "HandRecords")
+                                   "Board")))
+      (mv-let (status state)
+              (string-list->file (string-append "psc" ".htm")
+                                 (list *htmlhead*
+				       (serializedPSC boardnodes)
+                                       *htmltail*)
+                                 state)
+              (if (null status)
+                  (mv 'ok state)
+                  (mv 'error state)))))
 
   ; main (bridgeXML state) Given a duplicate bridge XML file, extracts
   ; appropriate information to create four HTML pages that link together:
