@@ -26,84 +26,75 @@
   (defun sortcontestants (unsortedcontestants)
     (if (null unsortedcontestants)
         nil
-        (let* (
-               (contestant (car unsortedcontestants))
-               (rest (cdr unsortedcontestants))
-               )
+        (let* ((contestant (car unsortedcontestants))
+                (rest (cdr unsortedcontestants)))
           (insert-sorted contestant (sortcontestants rest)))))
   
   (defun sortmvranks (ranks mvs)
     (if (null ranks)
         mvs
-        (let (
-              (rank (car ranks))
-              (rest (cdr ranks))
-              )
-          (mv-let
-           (a b c)
-           mvs
-           (sortmvranks
-            rest
-            (mv
-             (if (equal (xml-getattribute rank "Strat") "A")
-                 (xml-gettext rank)
-                 a)
-             (if (equal (xml-getattribute rank "Strat") "B")
-                 (xml-gettext rank)
-                 b)
-             (if (equal (xml-getattribute rank "Strat") "C")
-                 (xml-gettext rank)
-                 c)))))))
+        (let ((rank (car ranks))
+              (rest (cdr ranks)))
+          (mv-let (a b c)
+                  mvs
+                  (sortmvranks
+                    rest
+                    (mv
+                     (if (equal (xml-getattribute rank "Strat") "A")
+                         (xml-gettext rank)
+                         a)
+                     (if (equal (xml-getattribute rank "Strat") "B")
+                         (xml-gettext rank)
+                         b)
+                     (if (equal (xml-getattribute rank "Strat") "C")
+                         (xml-gettext rank)
+                         c)))))))
   
   (defun serializedcontestants (contestants)
     (if (null contestants)
         ""
-        (let* (
-            (contestant (car contestants))
-            (rest (cdr contestants))
-            (pairno (xml-getattribute contestant "ID"))
-            (players (xml-getnodes contestant "Player"))
-            (player1 (xml-gettext (xml-getnode (car players) "Name")))
-            (player2 (xml-gettext (xml-getnode (cadr players) "Name")))
-            (strat (xml-getattribute contestant "Strat"))
-            (sectionranks (xml-getnodes contestant "SectionRank"))
-            (overallranks (xml-getnodes contestant "OverallRank"))
-            (matchpoint (xml-gettext
-                         (xml-getnode contestant "MatchpointTotal")))
-            (percentage (xml-gettext
-                         (xml-getnode contestant "Percentage")))
-            (mpvalue (xml-gettext (xml-getnode contestant "Award")))
-            (masterpoint (if (equal mpvalue "")
-                             "&nbsp;"
-                             mpvalue))
-            )
+        (let* ((contestant (car contestants))
+               (rest (cdr contestants))
+               (pairno (xml-getattribute contestant "ID"))
+               (players (xml-getnodes contestant "Player"))
+               (player1 (xml-gettext (xml-getnode (car players) "Name")))
+               (player2 (xml-gettext (xml-getnode (cadr players) "Name")))
+               (strat (xml-getattribute contestant "Strat"))
+               (sectionranks (xml-getnodes contestant "SectionRank"))
+               (overallranks (xml-getnodes contestant "OverallRank"))
+               (matchpoint (xml-gettext
+                            (xml-getnode contestant "MatchpointTotal")))
+               (percentage (xml-gettext
+                            (xml-getnode contestant "Percentage")))
+               (mpvalue (xml-gettext (xml-getnode contestant "Award")))
+               (masterpoint (if (equal mpvalue "")
+                                "&nbsp;"
+                                mpvalue)))
           (concatenate 'string
                        "<tr>"
                        "<td>" pairno "</td>"
                        "<td>" player1 " - " player2 "</td>"
                        "<td>" strat "</td>"
-                       (mv-let
-                        (a b c)
-                        (sortmvranks sectionranks
-                                     (mv "&nbsp;" "&nbsp;" "&nbsp;" ))
-                        (concatenate 'string
-                                     "<td>" a "</td>"
-                                     "<td>" b "</td>"
-                                     "<td>" c "</td>"))
-                       (mv-let
-                        (a b c)
-                        (sortmvranks overallranks
-                                     (mv "&nbsp;" "&nbsp;" "&nbsp;" ))
-                        (concatenate 'string
-                                     "<td>" a "</td>"
-                                     "<td>" b "</td>"
-                                     "<td>" c "</td>"))
+                       (mv-let (a b c)
+                               (sortmvranks sectionranks
+                                            (mv "&nbsp;" "&nbsp;"
+                                                "&nbsp;" ))
+                         (concatenate 'string
+                                      "<td>" a "</td>"
+                                      "<td>" b "</td>"
+                                      "<td>" c "</td>"))
+                       (mv-let (a b c)
+                         (sortmvranks overallranks
+                                      (mv "&nbsp;" "&nbsp;" "&nbsp;" ))
+                         (concatenate 'string
+                                      "<td>" a "</td>"
+                                      "<td>" b "</td>"
+                                      "<td>" c "</td>"))
                        "<td>" matchpoint "</td>"
                        "<td>" percentage "</td>"
                        "<td>" masterpoint "</td>"
                        "</tr>"
-                       (serializedcontestants rest)
-                       ))))
+                       (serializedcontestants rest)))))
   
   ; XXX rankingnodes is a bad misnomer.  rankingnodes should definitely
   ; *not* be a list of Rankings nodes.  At a minimum, we need the Section
@@ -111,15 +102,13 @@
   (defun serializedrankings (rankingnodes)
     (if (null rankingnodes)
         ""
-        (let* (
-               (ranking (car rankingnodes))
+        (let* ((ranking (car rankingnodes))
                (rest (cdr rankingnodes))
                (unsortedcontestants (xml-getnodes
-                                     (xml-getnode ranking "Rankings")
-                                     "Contestants"))
+                                      (xml-getnode ranking "Rankings")
+                                      "Contestants"))
                (contestanthtml (serializedcontestants
-                                (sortcontestants unsortedcontestants)))
-               )
+                                 (sortcontestants unsortedcontestants))))
           (concatenate 'string
                        *rktablehead*
                        contestanthtml
