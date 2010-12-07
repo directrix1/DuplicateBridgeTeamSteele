@@ -11,7 +11,7 @@
 
  (defconst *menu*
     (concatenate 'string
-     "<table border=\"1\" cellspacing=\"20\">"
+     "<table class=\"results\"><tr>" ;border=\"1\" cellspacing=\"20\">"
      "<tr>"
      "<th><a href=\"boards-no-trav.htm\">Boards Without Travelers</a></th>"
      "<th><a href=\"boards-trav.htm\">Boards With Travelers</a></th>"
