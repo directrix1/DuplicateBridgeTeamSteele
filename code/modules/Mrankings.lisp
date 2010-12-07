@@ -130,8 +130,8 @@
     ; Build a dummy node that looks like xmlminidom, so we can act like
     ; nodes are rooted there as children, and we can just use xml-getnodes
     ; on it.
-    (let* ((dummyroot (mv 'dummyroot nil nodes))
-           (maybesections (xml-getnodes dummyroot 'Section)))
+    (let* ((dummyroot (mv "dummyroot" nil nodes))
+           (maybesections (xml-getnodes dummyroot "Section")))
         (if maybesections
             ; We found them
             maybesections
