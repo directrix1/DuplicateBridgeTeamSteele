@@ -25,6 +25,7 @@
             (string-list->file
               (string-append "boards-no-trav" ".htm")
               (list *htmlhead*
+                    *menu*
                     (serializedboards 
                       (xml-getnodes (xml-getnode (xml-getnode bntXML
 		                                              "Game")
@@ -50,6 +51,7 @@
       (mv-let (status state)
               (string-list->file (string-append "boards-trav" ".htm")
                                  (list *htmlhead*
+                                       *menu*
 				       (serializedboards boardnode 1)
                                        *htmltail*)
                                  state)
@@ -67,6 +69,7 @@
       (mv-let (status state)
               (string-list->file (string-append "rnk" ".htm")
                                  (list *htmlhead*
+                                       *menu*
 				       (serializedRankings sections)
                                        *htmltail*)
                                  state)
@@ -86,6 +89,7 @@
       (mv-let (status state)
               (string-list->file (string-append "psc" ".htm")
                                  (list *htmlhead*
+                                       *menu*
 				       (serializedPSC gamenode boardnodes)
                                        *htmltail*)
                                  state)

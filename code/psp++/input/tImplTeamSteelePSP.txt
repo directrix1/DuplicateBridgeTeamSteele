@@ -106,6 +106,12 @@ time log:
 	  phase: code
 	  comment: Group worked together on finishing up the implementations to Rankings module. Created a few new functions (serializedcontestants, etc.) and renamed functions to fit scheme. Rankings is finished other than creating a list of name ID pairs for PSC.
 
+	- date: Dec 7, 2010
+	  start time: 11:45AM
+	  end time: 3:00PM
+	  phase: code
+	  comment: Colby worked on getcontestants and above, Micah worked on cleaning up the CSS. 
+
 new objects:
 
 	- name: xml-getallnodes
@@ -339,6 +345,16 @@ defect log:
 	  comment: Fixed error syntax error in Rankings function sortmvranks, (mvs) should have been mvs, confused compiler.
 
 	- date: Dec 3, 2010
+	  type: Conceptual
+	  fix time: 10
+	  comment: Fixed infinite loop in rankings, forgot ending condition on serializedrankings after modifing it.
+
+	- date: Dec 3, 2010
+	  type: Conceptual
+	  fix time: 30
+	  comment: Fixed error where Rankings function sortmvranks was taking in the wrong order of ranks (such as Section / Overall).
+
+	- date: Dec 7, 2010
 	  type: Conceptual
 	  fix time: 30
 	  comment: Fixed error where Rankings function sortmvranks was taking in the wrong order of ranks (such as Section / Overall).
