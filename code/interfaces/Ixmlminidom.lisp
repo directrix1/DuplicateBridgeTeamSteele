@@ -21,22 +21,62 @@
 (defconst *endattrname* (cons #\= *whitespace*))
   
 (interface Ixmlminidom
+  ;xml-unescape (escapedchars) → string with entities replaced
   (sig xml-unescape (escapedchars))
+  
+  ;xml-readnodeproperties (xmlchars) →
+  ; returns (mv attributes remainingxmlstring)
   (sig xml-readnodeproperties (xmlchars))
+
+  ;xml-skipdontcares (xmlchars) → returns next xmlchars sans don't cares
   (sig xml-skipdontcares (xmlchars))
+
+  ;xml-readnodes (xmlchars) → returns (mv nodes remainingxmlstring)
   (sig xml-readnodes (xmlchars))
+  
+  ;xml-readnode (xmlchars) → returns the root node from xmlstring
   (sig xml-readnode (xmlchars))
+  
+  ;xml-getnodes (node nodename) → returns children of node with type
+  ;  nodename
   (sig xml-getnodes (node nodename))
+  
+  ;xml-getdeepnodes (node nodename) → returns children of node with type
+  ;  nodename searching recursively using DFS with node as root.
   (sig xml-getdeepnodes (node nodename))
+  
+  ;xml-getnode (node nodename) → returns first child node with type
+  ;  nodename
   (sig xml-getnode (node nodename))
+  
+  ;xml-getdeepnode (node nodename) → returns first child node with type
+  ;  nodename searching recursively using DFS with node as root.
   (sig xml-getdeepnode (node nodename))
+  
+  ;xml-getattribute (node attributename) → returns the value of node's
+  ; attribute with name attributename
   (sig xml-getattribute (node attributename))
+  
+  ;xml-gettext (node) → returns the composite of all text inside of a node
   (sig xml-gettext (node))
+  
+  ;xml-isattribute (attribute) → returns true iff attribute is an mv of
+  ;  length 2 with both elements of the mv being strings
   (sig xml-isattribute (attribute))
+  
+  ;xml-isattributelist (attributes) → returns true iff attributes
+  ;  is nil or a list of attributes
   (sig xml-isattributelist (attributes))
+  
+  ;xml-isnode (node) → returns true iff node is actually a node
   (sig xml-isnode (node))
+  
+  ;xml-isnodelist (nodes) → returns true iff nodes is a list of nodes
   (sig xml-isnodelist (nodes))
   
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;Contracts
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (con xml-unescape-returns-string
        (implies (standard-char-listp x)
                 (stringp (xml-unescape x))))
