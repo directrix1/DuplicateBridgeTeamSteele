@@ -36,4 +36,58 @@
   (sig xml-isattributelist (attributes))
   (sig xml-isnode (node))
   (sig xml-isnodelist (nodes))
+  
+  (con xml-unescape-returns-string
+       (implies (standard-char-listp x)
+                (stringp (xml-unescape x))))
+  (con xml-skipdontcares-lessthanequal-xmlchars
+       (imlies (and (standard-char-listp x)
+                    (equal (length x) y))
+               (<= (xml-skipdontcares x) y)))
+  (con xml-getnodes-returns-nodes
+       (implies (and
+                 (stringp y)
+                 (xml-isnode x))
+                (xml-isnodelist (xml-getnodes y x))))
+  (con xml-getnodes-returns-children
+       (implies (and
+                 (xml-isnode x)
+                 (> (length (caddr x)) 0)
+                 (equal node (car (caddr x)))
+                 (equal y (car node))
+                 (stringp y)
+                 )
+                (let ((res (xml-getnodes y x)))
+                (and
+                 (> (length res) 0)
+                 (equal node (car res))))))
+  (con xml-getdeepnodes-returns-nodes
+       (implies (and
+                 (stringp y)
+                 (xml-isnode x))
+                (xml-isnodelist (xml-getdeepnodes y x))))
+  (con xml-getnode-returns-node-or-nil
+       (implies (and
+                 (xml-isnode x)
+                 (stringp y))
+                (let ((res (xml-getnode x y)))
+                  (or
+                   (null res)
+                   (xml-isnode res)))))
+  (con xml-getdeepnode-returns-node-or-nil
+       (implies (and
+                 (xml-isnode x)
+                 (stringp y))
+                (let ((res (xml-getdeepnode x y)))
+                  (or
+                   (null res)
+                   (xml-isnode res)))))
+  (con xml-getattribute-returns-string
+       (implies (and
+                 (xml-isnode x)
+                 (stringp y))
+                (stringp (xml-getattribute x y))))
+  (con xml-gettext-returns-string
+       (implies (xml-isnode x))
+                (stringp (xml-gettext x)))
 )
