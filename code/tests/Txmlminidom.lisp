@@ -20,7 +20,7 @@
   
   (defconst
     *Oface*
-    "<bob><slidell id=\"porter\">123<jumptoconclusions /></slidell></bob>")
+    "<bob><slidell id=\"porter\">12 &amp; 3<jumptoconclusions /></slidell></bob>")
   
   (check-expect
    (xml-getattribute
@@ -32,7 +32,7 @@
   (check-expect
    (xml-gettext
     (xml-readnode *Oface*))
-   "123"))
+   "12 & 3"))
 
 (link Test
       (Mbasiclex Mxmlminidom Txmlminidom))

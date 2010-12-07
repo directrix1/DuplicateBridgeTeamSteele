@@ -1,3 +1,7 @@
+;; The first four lines of this file were added by Dracula.
+;; They tell DrScheme that this is a Dracula Modular ACL2 program.
+;; Leave these lines unchanged so that DrScheme can properly load this file.
+#reader(planet "reader.ss" ("cce" "dracula.plt") "modular" "lang")
 #| Team Steele
    Software Engineering I
    Mxmlminidom
@@ -44,16 +48,13 @@
          (standard-char-listp escapedchars))
         (let* ((sot (split-on-token '(#\& ) escapedchars))
                (pre (car sot))
-               (tok (cadr sot))
-               (post (caddr sot)))
-          (let* ((sot (split-on-token '(#\; ) post))
-                 (thechar (car sot))
-                 (ntok (cadr sot))
-                 (theend (caddr sot)))
-            (let ((thecharstr (chrs->str thechar)))
-              (string-append
+               (post (caddr sot))
+               (sot1 (split-on-token '(#\; ) post))
+               (thechar (car sot1))
+               (theend (caddr sot1))
+               (thecharstr (chrs->str thechar)))
+              (concatenate 'string
                (chrs->str pre)
-               (string-append
                 (if (string-equal "amp" thecharstr)
                     "&"
                     (if (string-equal "lt" thecharstr)
@@ -63,7 +64,7 @@
                             (if (string-equal "quot" thecharstr)
                                 "\""
                                 ""))))
-                (xml-unescape theend))))))
+                (xml-unescape theend)))
         ""))
   
   ;xml-readnodeproperties (xmlchars) →
