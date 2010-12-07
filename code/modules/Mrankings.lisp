@@ -126,19 +126,19 @@
               (concatenate 'list kids (gluekids (cdr nodes))))
       nil))
 
-  (defun findsectionnodes (nodes)
+  (defun bfsfindnodes (nodes nodename)
     ; Build a dummy node that looks like xmlminidom, so we can act like
     ; nodes are rooted there as children, and we can just use xml-getnodes
     ; on it.
     (let* ((dummyroot (mv "dummyroot" nil nodes))
-           (maybesections (xml-getnodes dummyroot "Section")))
-        (if maybesections
+           (maybes (xml-getnodes dummyroot nodename)))
+        (if maybes
             ; We found them
-            maybesections
-            ; There were no Section nodes.  Look deeper.
+            maybes
+            ; There were no nodes.  Look deeper.
             (findsectionnodes (gluekids nodes)))))
   
-  ; sectionnodes should be a list of section nodes
+  ; sectionnodes should be a list of Section nodes
   (defun findspecificsection (sectionnodes label dir)
     (if sectionnodes
       ; linear search!
@@ -151,14 +151,27 @@
             (findspecificsection (cdr sectionnodes) label dir)))
       nil))
 
-  ; Approach: use xml-getnodes on rankingnodes in a BFS fashion until we
-  ; hit the Section nodes.  Start trying to find the Section node whose
-  ; SectionLabel and Direction attributes match section and dir,
-  ; respectively.  Use xml-getnodes for Contestants on that section, and
-  ; find the Contestants node whose ID attribute matches id....
-  (defun getcontestants (section dir id rankingnodes)
-    (let* ((section (findspecificsection (findsectionnodes rankingnodes)
-                                         section
-                                         dir)))
+  ; nodes should be a list of Contestants nodes
+  (defun findspecificcontestants (nodes id)
+    (if nodes
+      (let* ((current (car nodes)))
+        (if (equal (xml-getattribute current "ID") id)
+            current
+            (findspecificcontestants (cdr nodes) id)))
       nil))
+
+  ; For the two players in a Contestants element, delivers a string in the
+  ; form "Alice - Bob".
+  (defun getcontestants (section dir id rankingnodes)
+    (let* ((section (findspecificsection (bfsfindnodes rankingnodes
+                                                       "Section")
+                                         section
+                                         dir))
+           (contestants (findspecificcontestasts
+                          (bfsfindnodes section "Contestants")
+                          id))
+           (players (xml-getnodes contestants "Player")))
+      (concatenate 'string (xml-gettext (car players))
+                           " - "
+                           (xml-gettext (cadr players)))))
   (export Irankings))
