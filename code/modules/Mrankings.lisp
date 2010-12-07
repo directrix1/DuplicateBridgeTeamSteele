@@ -136,7 +136,7 @@
             ; We found them
             maybes
             ; There were no nodes.  Look deeper.
-            (findsectionnodes (gluekids nodes)))))
+            (bfsfindnodes (gluekids nodes) nodename))))
   
   ; sectionnodes should be a list of Section nodes
   (defun findspecificsection (sectionnodes label dir)
@@ -167,7 +167,7 @@
                                                        "Section")
                                          section
                                          dir))
-           (contestants (findspecificcontestasts
+           (contestants (findspecificcontestants
                           (bfsfindnodes section "Contestants")
                           id))
            (players (xml-getnodes contestants "Player")))
