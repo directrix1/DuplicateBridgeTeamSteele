@@ -80,14 +80,13 @@
   ; which includes information about each match they played an against
   ; whom.
   (defun personal-score-cards (pscXML state)
-    (let* (
-           (boardnodes (xml-getnodes (xml-getnode (xml-getnode pscXML "Game")
-                                                "HandRecords")
-                                   "Board")))
+    (let* ((gamenode (xml-getnode pscXML "Game"))
+           (boardnodes (xml-getnodes (xml-getnode gamenode "HandRecords")
+                                     "Board")))
       (mv-let (status state)
               (string-list->file (string-append "psc" ".htm")
                                  (list *htmlhead*
-				       (serializedPSC boardnodes)
+				       (serializedPSC gamenode boardnodes)
                                        *htmltail*)
                                  state)
               (if (null status)

@@ -28,10 +28,10 @@
   
   ;Pulls the Personal Score Card data for all players, and put's them all
   ;into html table format
-  ;XMLnodes format: Nodes format
+  ;XMLnodes format: Nodes format XXX update this to two args
   ;Output format: String, HTML formatted text comprising the score card
   ;    for one player pair
-  (sig serializedPSC (xmlnodes))
+  (sig serializedPSC (gamenode boardnodes))
   
   ;Pulls the Name Strings for a given Pair ID
   ;PairID format: (String Direction, String SectionNumber)

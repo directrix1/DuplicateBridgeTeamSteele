@@ -86,8 +86,8 @@
   ;XMLnodes format: Nodes format
   ;Output format: String, HTML formatted text comprising the score card
   ;    for one player pair
-  (defun serializedPSC (xmlnodes)
-    (let* ((results (getAllSeparateResults xmlnodes)))
+  (defun serializedPSC (gamenode boardnodes)
+    (let* ((results (getAllSeparateResults boardnodes)))
                    (getAllPairs results nil)))
     
   
