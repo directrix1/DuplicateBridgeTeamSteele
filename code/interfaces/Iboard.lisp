@@ -9,6 +9,17 @@
    Software that creates a document object model from XML input.
 |#
 
+ (defconst *menu*
+    (concatenate 'string
+     "<table border="1" cellspacing="20">"
+     "<tr>"
+     "<th><a href="boards-no-trav.htm">Boards Without Travelers</a></th>"
+     "<th><a href="boards-trav.htm">Boards With Travelers</a></th>"
+     "<th><a href="rnk.htm">Rankings</a></th>"
+     "<th><a href="psc.htm">Personal Score Cards</a></th>"
+     "</tr>"
+     "</table>"
+     ))
 (defconst *div-open-1* "<div class=\"")
   (defconst *div-open-2* "\">")
   (defconst *div-close* "</div>\n")
