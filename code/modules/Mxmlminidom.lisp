@@ -40,7 +40,78 @@
   (defun splitoff-prefix-mv (ps xs)
     (let* ((res (splitoff-prefix ps xs)))
       (mv (car res) (cadr res) (caddr res))))
+
+  ;xml-escape (unescapedchars) → returns string with bad chars replaced
+  ;    with entities
+  (defun xml-escape (unescapedchars)
+    (if (null unescapedchars)
+        ""
+        (let ((char (car unescapedchars))
+              (rest (cdr unescapedchars)))
+          (string-append
+           (cond
+            ((equal char #\&) "&amp;")
+            ((equal char #\<) "&lt;")
+            ((equal char #\>) "&gt;")
+            ((equal char #\') "&apos;")
+            ((equal char #\") "&quot;")
+            (t (chrs->str (list char))))
+           (xml-escape rest)
+           ))))
   
+  ;xml-serialize-attributes (attributes) → Returns a string that is
+  ;    xml that represents the passed in attribute list.
+  (defun xml-serialize-attributes (attributes)
+    (if (null attributes)
+        ""
+        (let ((attribute (car attributes))
+              (rest (cdr attributes)))
+          (concatenate
+           'string
+           " "
+           (xml-escape (str->chrs (car attribute)))
+           "=\""
+           (xml-escape (str->chrs (cadr attribute)))
+           "\""
+           (xml-serialize-attributes rest)))))
+           
+  
+  ;xml-serizlize-nodes (xmlnodes) → Returns a string containing xml
+  ;    nodes that represents the node list, xmlnodes.
+  (defun xml-serialize-nodes (xmlnodes)
+    (if (null xmlnodes)
+        ""
+        (let ((node (car xmlnodes))
+              (rest (cdr xmlnodes)))
+          (mv-let (nodename attributes children)
+                  node
+                  (string-append
+                   (if (equal nodename 'text)
+                       (xml-escape (str->chrs children))
+                       (concatenate 'string
+                        "<"
+                        (xml-escape (str->chrs nodename))
+                        (xml-serialize-attributes attributes)
+                        (if (null children)
+                            "/>"
+                            (concatenate 'string
+                             ">"
+                             (xml-serialize-nodes children)
+                             "</"
+                             (xml-escape (str->chrs nodename))
+                             ">"))))
+                   (xml-serialize-nodes rest))))))
+
+  ;xml-serizlize-dom (xmlnode) → Returns a string containing an xml
+  ;    document that represents the dom passed in through xmlnode.
+  (defun xml-serialize-dom (xmlnode)
+;    (if (xml-isnode xmlnode)
+        (string-append
+         "<?xml version=\"1.0\"?>"
+         (xml-serialize-nodes (list xmlnode)))
+    )
+;        ""))
+
   ;xml-unescape (escapedchars) → string with entities replaced
   (defun xml-unescape (escapedchars)
     (if (and 
@@ -63,7 +134,9 @@
                             ">"
                             (if (string-equal "quot" thecharstr)
                                 "\""
-                                ""))))
+                                (if (string-equal "apos" thecharstr)
+                                    "'"
+                                    "")))))
                 (xml-unescape theend)))
         ""))
   

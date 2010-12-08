@@ -21,6 +21,22 @@
 (defconst *endattrname* (cons #\= *whitespace*))
   
 (interface Ixmlminidom
+  ;xml-escape (unescapedchars) → returns string with bad chars replaced
+  ;    with entities
+  (sig xml-escape (unescapedchars))
+  
+  ;xml-serialize-attributes (attributes) → Returns a string that is
+  ;    xml that represents the passed in attribute list.
+  (sig xml-serialize-attributes (attributes))           
+  
+  ;xml-serizlize-nodes (xmlnodes) → Returns a string containing xml
+  ;    nodes that represents the node list, xmlnodes.
+  (sig xml-serialize-nodes (xmlnodes))
+
+  ;xml-serizlize-dom (xmlnode) → Returns a string containing an xml
+  ;    document that represents the dom passed in through xmlnode.
+  (sig xml-serialize-dom (xmlnode))
+
   ;xml-unescape (escapedchars) → string with entities replaced
   (sig xml-unescape (escapedchars))
   
