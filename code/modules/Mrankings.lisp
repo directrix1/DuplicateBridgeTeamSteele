@@ -171,7 +171,9 @@
                           (bfsfindnodes (list section) "Contestants")
                           id))
            (players (xml-getnodes contestants "Player")))
-      (concatenate 'string (xml-gettext (car players))
-                           " - "
-                           (xml-gettext (cadr players)))))
+      (concatenate 'string
+                   (xml-gettext (car players))
+                   " - "
+                   (xml-gettext (cadr players)))))
+
   (export Irankings))
