@@ -168,7 +168,7 @@
                                          section
                                          dir))
            (contestants (findspecificcontestants
-                          (bfsfindnodes section "Contestants")
+                          (bfsfindnodes (list section) "Contestants")
                           id))
            (players (xml-getnodes contestants "Player")))
       (concatenate 'string (xml-gettext (car players))
