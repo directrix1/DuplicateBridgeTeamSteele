@@ -165,14 +165,14 @@
                          (cdr ewkv)))
                          (remove-equal ewkv ew))))))))
   
-  ; getallseparateresults (xmlnodes) → converts xmlnodes, a sequence of
-  ; board nodes, to a sequence of FIXME 
-  (defun getallseparateresults (xmlnodes)
-    (if (null xmlnodes)
+  ; getallseparateresults (xmlnodes) → converts boardnodes, a list of Board
+  ; nodes, to a sequence of FIXME 
+  (defun getallseparateresults (boardnodes)
+    (if (null boardnodes)
         (mv nil nil)
         (let* (
-               (board (car xmlnodes))
-               (rest (cdr xmlnodes))
+               (board (car boardnodes))
+               (rest (cdr boardnodes))
                (boardnum
                 (xml-gettext (xml-getnode board "BoardNo")))
                (results
