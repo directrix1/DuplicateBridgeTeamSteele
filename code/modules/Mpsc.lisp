@@ -71,20 +71,23 @@
           ""
           (if (null nextns)
               (concatenate 'string
-                     *psctablehead*
-                     ;get info from gamenode
-                     (getBoardsForPair (car keyew)
-                                       (cadr keyew)
-                                       ew
-                                       gamenode
-                                       "N-S") ; The *opponents'* dir.
-                     *psctabletail*
-                     (getAllPairs (mv ns restew) gamenode))
+                           *psctablehead*
+                           ;get info from gamenode
+                           (getBoardsForPair (car keyew)
+                                             (cadr keyew)
+                                             ew
+                                             gamenode
+                                             "N-S") ; The *opponents'* dir.
+                           *psctabletail*
+                           (getAllPairs (mv ns restew) gamenode))
               (concatenate 'string
                            *psctablehead*
                            ;get info from gamenode
-                           (getBoardsForPair (car keyns) (cadr keyns) ns
-                                             gamenode "E-W")
+                           (getBoardsForPair (car keyns)
+                                             (cadr keyns)
+                                             ns
+                                             gamenode
+                                             "E-W")
                            *psctabletail*
                            (getAllPairs (mv restns ew) gamenode))))))
 
