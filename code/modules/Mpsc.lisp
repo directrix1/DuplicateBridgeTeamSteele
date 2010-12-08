@@ -40,7 +40,7 @@
           (concatenate 'string
               "<tr>"
               "<td>"               (first sbrd)  "</td>"    ; boardnum
-              "<td>"               id            "</td>"    ; vs. info
+              "<td>"               section id    "</td>"    ; vs. info
               "<td>"               players       "</td>"    ; names
               "<td>"               (third sbrd)  "</td>"    ; score
               "<td>"               (fourth sbrd) "</td>"    ; matchpoints
@@ -74,7 +74,10 @@
                      *psctablehead*
                      ;get info from gamenode
                      (getBoardsForPair (car keyew) (cadr keyew) ew
-                                       gamenode "E-W")
+                                       ; It's N-S here, not E-W, because
+                                       ; we're getting the direction for
+                                       ; the *opponents*.
+                                       gamenode "N-S")
                      *psctabletail*
                      (getAllPairs (mv ns restew) gamenode)
                      )
@@ -82,7 +85,7 @@
                      *psctablehead*
                      ;get info from gamenode
                      (getBoardsForPair (car keyns) (cadr keyns) ns
-                                       gamenode "N-S")
+                                       gamenode "E-W")
                      *psctabletail*
                      (getAllPairs (mv restns ew) gamenode))))))
   
