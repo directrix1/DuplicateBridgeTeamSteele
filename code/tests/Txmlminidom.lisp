@@ -17,10 +17,63 @@
   (import Ixmlminidom)
   
   (include-book "testing" :dir :teachpacks)
+  (include-book "doublecheck" :dir :teachpacks)
   
   (defconst
     *Oface*
     "<bob><slidell id=\"porter\">12 &amp; 3<jumptoconclusions /></slidell></bob>")
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ; Functions to generate an xmlminidom tree
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (defun normalize-text (nodes)
+    (if (< (length nodes) 2)
+        nodes
+        (let ((a (car nodes))
+              (b (cadr nodes))
+              (rest (cddr nodes)))
+          (if (and
+               (equal (car a) 'text)
+               (equal (car b) 'text))
+              (normalize-text
+               (cons (mv 'text nil 
+                         (string-append (caddr a) (caddr b))) rest))
+              (cons (if (equal (car a) 'text)
+                        a
+                        (mv (car a) (cadr a) (normalize-text (caddr a))))
+                    (normalize-text (cons b rest)))))))
+  
+  (defrandom randomxmltext (min)
+    (if (equal min 0)
+        ""
+        (string-append
+         (coerce (list (code-char
+                        (random-case
+                         (random-between 33 46)
+                         (random-between 48 60)
+                         62
+                         (random-between 64 126)
+                         ))) 'string)
+         (randomxmltext (- min 1)))))
+  
+  (defrandom randomattribute ()
+    (mv (randomxmltext (random-between 1 30)) (random-string)))
+
+  (defrandom randomnode (maxdepth)
+    (random-case
+     (mv 'text nil (randomxmltext (random-between 1 30)))
+     (mv
+      (randomxmltext (random-between 1 30))
+      (random-list-of (randomattribute) :size (random-between 0 10)) 
+      (normalize-text (random-list-of
+       (randomnode (- maxdepth 1)) :size (random-between 0 maxdepth))))))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ; Property to test if xml is invertible!
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (defproperty xml-readnode-serialize-dom-invertible-property :repeat 500
+    (x :value (randomnode 5))
+    (equal x (xml-readnode (xml-serialize-dom x))))
   
   (check-expect
    (xml-getattribute
@@ -70,7 +123,7 @@
   
   (defconst *t1* (mv "bob" (list (mv "a" "b")) nil))
   (check-expect (xml-readnode (xml-serialize-dom *t1*)) *t1*)
-  
+
   )
 
 (link Test
