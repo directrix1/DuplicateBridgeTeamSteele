@@ -61,38 +61,6 @@
                ".main {margin: 0px auto; width: 45em;}"
                "</style></head><body>"
                "<div class=\"main\">"))
-  
-(defconst *htmlhead* 
-  (concatenate 'string 
-               "<html><head><style>"
-               "body {background-color: white; color: black;}"
-               ".board {border-collapse: collapse; clear: both;" 
-               "position: relative; top: 0px; "
-               "left: 0px; width: 100%; height: 30em;" 
-               "border: solid; border-width: 1px; "
-               "margin: 1em 0em 0em; background-color: #d8d8d8;}"
-               ".boardnum {position: absolute; left: 0em; top: 0em;}"
-               ".N {position: absolute; height: 33%; width: 34%; "
-               "left: 33%;top: 0%; background-color: white;}"
-               ".S {position: absolute; height: 33%; width: 34%;" 
-               "left: 33%;top: 67%; background-color: white;}"
-               ".E {position: absolute; height: 34%; width: 33%;" 
-               "left: 67%;top: 33%; background-color: white;}"
-               ".W {position: absolute; height: 34%; width: 33%;" 
-               "left: 0%;top: 33%; background-color: white;}"
-               ".dealer {text-align: center; font-weight: bold; color: blue;}"
-               ".vulnerable {text-align: center; font-weight: bold; color: red;}"
-               ".results {border-collapse:collapse; clear: left; "
-               "width: 100%; margin: 2px 1px 0em;}"
-               ".results tr td {font-size: 11pt; text-align: center; "
-               "border: 1px solid black; margin: 1px;}"
-               ".results tr th {font-size: 11pt; text-align: center; "
-               "border: 1px solid black; margin: 1px;}"
-               ".th {border: 1px; border-collapse:collapse; "
-               "border-color: black; border-style: solid; border-width: 1px;} "
-               ".main {margin: 0px auto; width: 45em;}"
-               "</style></head><body>"
-               "<div class=\"main\">"))
 (defconst *htmltail* "</div></body></html>")
 (defconst *tablehead*
   (concatenate 'string
