@@ -22,21 +22,21 @@
   ; Board numbers, dealer, vulnerable, and hands for each direction
   (defun boards-no-trav (bntXML state)
     (mv-let (status state)
-            (string-list->file
-              (string-append "boards-no-trav" ".htm")
-              (list *htmlhead*
-                    *menu*
-                    (serializedboards 
-                      (xml-getnodes (xml-getnode (xml-getnode bntXML
-		                                              "Game")
-		                                 "HandRecords")
-		                    "Board")
-		      0)
-                    *htmltail*)
-              state)
-    (if (null status)
-        (mv 'ok state)
-        (mv 'error state))))
+            (string-list->file (string-append "boards-no-trav" ".htm")
+                               (list *htmlhead*
+                                     *menu*
+                                     (serializedboards 
+                                       (xml-getnodes (xml-getnode
+                                                       (xml-getnode bntXML
+		                                         "Game")
+		                                       "HandRecords")
+		                                     "Board")
+		                       0)
+                                     *htmltail*)
+                               state)
+      (if (null status)
+          (mv 'ok state)
+          (mv 'error state))))
 
   ; boards-trav (btXML state) Given a duplicate bridge XML file, gets the
   ; same information as boards-no-trav as well as the travelers information
@@ -44,8 +44,7 @@
   ; pairs at that board. Creates HTML page with this information with the 
   ; board information and travelers information in separate tables.
   (defun boards-trav (btXML state)
-    (let* (
-           (boardnode (xml-getnodes (xml-getnode (xml-getnode btXML "Game")
+    (let* ((boardnode (xml-getnodes (xml-getnode (xml-getnode btXML "Game")
                                                 "HandRecords")
                                    "Board")))
       (mv-let (status state)
@@ -55,17 +54,15 @@
 				       (serializedboards boardnode 1)
                                        *htmltail*)
                                  state)
-              (if (null status)
-                  (mv 'ok state)
-                  (mv 'error state)))))
+        (if (null status)
+            (mv 'ok state)
+            (mv 'error state)))))
 
   ; rankings (rnkXML state) Given a duplicate bridge XML file, creates a 
   ; rankings table in an HTML file including each pairs ranking and various
   ; other stats such as matchpoint and percentage score.
   (defun rankings (rnkXML state)
-    (let* (
-           (sections (xml-getnodes (xml-getnode rnkXML "Game")
-                                                "Section")))
+    (let* ((sections (xml-getnodes (xml-getnode rnkXML "Game") "Section")))
       (mv-let (status state)
               (string-list->file (string-append "rnk" ".htm")
                                  (list *htmlhead*
@@ -73,9 +70,9 @@
 				       (serializedRankings sections)
                                        *htmltail*)
                                  state)
-              (if (null status)
-                  (mv 'ok state)
-                  (mv 'error state)))))
+        (if (null status)
+          (mv 'ok state)
+          (mv 'error state)))))
   
   
   ; personal-score-cards (pscXML state) Given a duplicate bridge XML file,
@@ -93,9 +90,9 @@
 				       (serializedPSC gamenode boardnodes)
                                        *htmltail*)
                                  state)
-              (if (null status)
-                  (mv 'ok state)
-                  (mv 'error state)))))
+        (if (null status)
+          (mv 'ok state)
+          (mv 'error state)))))
 
   ; main (bridgeXML state) Given a duplicate bridge XML file, extracts
   ; appropriate information to create four HTML pages that link together:
@@ -105,14 +102,12 @@
     (mv-let (contents status state)
           (file->string (string-append bridgeXML ".xml") state)
           (if (null status)
-              (let* (
-               (xml (xml-readnode contents))
-               (bt (boards-trav xml state))
-               (bnt (boards-no-trav xml (cadr bt)))
-               (rnk (rankings xml (cadr bnt)))
-               (psc (personal-score-cards xml (cadr rnk)))
-               )
-              (mv 'ok (cadr psc)))
+              (let* ((xml (xml-readnode contents))
+                     (bt (boards-trav xml state))
+                     (bnt (boards-no-trav xml (cadr bt)))
+                     (rnk (rankings xml (cadr bnt)))
+                     (psc (personal-score-cards xml (cadr rnk))))
+                (mv 'ok (cadr psc)))
               (mv 'error state))))
   
   (export Iio))
