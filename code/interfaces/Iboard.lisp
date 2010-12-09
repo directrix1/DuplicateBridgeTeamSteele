@@ -111,6 +111,8 @@
   ; be rendered with the deal and results as required by description
   (sig serializedboards (xmlnodes trav-flag))
   
+  (sig getgamestring (gamenode))
+  
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;Contracts
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
