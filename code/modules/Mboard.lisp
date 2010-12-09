@@ -207,10 +207,17 @@
                        *div-open-1*
                        "boardnum"
                        *div-open-2*
+                       "Board: " boardnum "<br/><a href=\""
                        (if (equal trav-flag 1)
-                           "<a href=\"boards-no-trav.htm#"
-                           "<a href=\"boards-trav.htm#")
-                        boardnum "\">Board: " boardnum "</a>"
+                           (concatenate 
+                            'string
+                            "boards-no-trav.htm#"
+                            boardnum "\"><small>(hide travelers)</small></a>")
+                           (concatenate 
+                            'string
+                            "boards-trav.htm#"
+                            boardnum "\"><small>(show travelers)</small></a>")
+                           )
                        *div-close*
                        (serializedhands hands vulnerable dealer)
                        *div-close*
