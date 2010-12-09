@@ -54,7 +54,7 @@
   
   ;;;
   ;;;
-  (sig getAllPairs (results sections gamestring))
+  (sig getAllPairs (results sections gamestring gamenode))
   #|
   (con getPSC-con1
        (implies ()
