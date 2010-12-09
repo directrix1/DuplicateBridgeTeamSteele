@@ -162,10 +162,10 @@
 
   ; For the two players in a Contestants element, delivers a string in the
   ; form "Alice - Bob".
-  (defun getcontestants (section dir id rankingnodes)
-    (let* ((section (findspecificsection (bfsfindnodes rankingnodes
-                                                       "Section")
-                                         section
+  ; sections is a list of Section nodes
+  (defun getcontestants (sectionlabel dir id sections)
+    (let* ((section (findspecificsection sections
+                                         sectionlabel
                                          dir))
            (contestants (findspecificcontestants
                           (bfsfindnodes (list section) "Contestants")

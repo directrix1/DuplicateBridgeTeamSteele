@@ -41,7 +41,7 @@
   
   ;;;
   ;;;
-  (sig getBoardForPair(rbrds gamenode section dir))
+  (sig getBoardForPair(rbrds sections sectionlabel dir))
   
   ;Pulls the match results for a given Pair ID
   ;PairID format: (String Direction, String SectionNumber)
@@ -49,11 +49,11 @@
   ;XXX
   ;Output format: String, HTML formatted text comprising all the boards
   ;    for one player pair
-  (sig getBoardsForPair (pairid section results gamenode dir))
+  (sig getBoardsForPair (pairid sectionlabel results sections dir))
   
   ;;;
   ;;;
-  (sig getAllPairs (results gamenode))
+  (sig getAllPairs (results sections))
   #|
   (con getPSC-con1
        (implies ()
