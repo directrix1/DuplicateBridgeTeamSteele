@@ -128,7 +128,7 @@ time log:
 	  start time: 5:00PM
 	  end time: 11:00PM
 	  phase: code
-	  comment: Zach wrote contracts for Irankings, Colby cleaned up all files. Micah worked on header for Rankings. Worked on contracts for all modules.
+	  comment: Zach wrote contracts for Irankings, Colby cleaned up all files. Micah worked on header for Rankings. Worked on contracts for all modules. Ed fixed cross links across the documents based on player ID, board no, etc.
 
 new objects:
 
