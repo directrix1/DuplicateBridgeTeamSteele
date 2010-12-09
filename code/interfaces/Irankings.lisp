@@ -55,15 +55,18 @@
   (con serializedrankings-delivers-string
     (implies (xml-isnodelist rankingnodes)
              (stringp (serializedrankings rankingnodes))))
-  (con getcontestant-delivers-list-of-strings
-    (implies (xml-isnodelist rankingnodes)
-             (and (true-listp (getcontestants section dir id rankingnodes))
-                  (equal (len (getcontestants section dir id rankingnodes)
-                              (list "Pair No."
-                                    "Players"
-                                    "Strat"
-                                    "Overall Rank (A, B, C)"
-                                    "Section Rank (A, B, C)"
-                                    "Matchpoint Score"
-                                    "Percentage Score",
-                                    "Masterpoint Award")))))))
+  (con getcontestants-delivers-xml-node
+    (implies (and (stringp section)
+                  (stringp dir)
+                  (stringp id)
+                  (xml-isnodelist sections))
+             (xml-isnode (getcontestants section dir id sections))))
+  (con getcontestantsnames-delivers-string
+    (implies (xml-isnode contestants)
+             (stringp (getcontestantsnames contestants))))
+  (con getrankstring-delivers-string
+    (implies (and (xml-isnode contestants)
+             (stringp ranktype)
+             (or (string-equal ranktype "Section")
+                 (string-equal ranktype "Overall")))
+             (stringp (getrankstring ranktype contestants)))))

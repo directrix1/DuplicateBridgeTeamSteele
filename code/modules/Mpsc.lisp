@@ -62,7 +62,7 @@
 
   ;;;
   ;;;
-  (defun getAllPairs (results sections gamestring gamenode)
+  (defun getAllPairs (results sections gamestring average top gamenode)
     (let* ((ns (car results))
            (ew (cadr results))
            (nextns (car ns))
@@ -80,7 +80,8 @@
                              *psctableheadpre*
                              "E-W" (car keyew) (cadr keyew)
                              *psctableheadpost*
-                             (pscheader sectionlabel "E-W" pairid sections)
+                             (pscheader sectionlabel "E-W" pairid sections
+                                        average top)
                              *psctableheadcontents*
                              ;get info from gamenode
                              (getBoardsForPair pairid
@@ -93,6 +94,8 @@
                              (getAllPairs (mv ns restew)
                                           sections
                                           gamestring
+                                          average
+                                          top
                                           gamenode)))
               (let* ((pairid (car keyns))
                      (sectionlabel (cadr keyns)))
@@ -100,7 +103,8 @@
                              *psctableheadpre*
                              "N-S" (car keyns) (cadr keyns)
                              *psctableheadpost*
-                             (pscheader sectionlabel "N-S" pairid sections)
+                             (pscheader sectionlabel "N-S" pairid sections
+                                        average top)
                              *psctableheadcontents*
                              (getBoardsForPair pairid
                                                sectionlabel
@@ -112,9 +116,11 @@
                              (getAllPairs (mv restns ew)
                                           sections
                                           gamestring
+                                          average
+                                          top
                                           gamenode)))))))
 
-  (defun pscheader (sectionlabel dir id sections)
+  (defun pscheader (sectionlabel dir id sections average top)
     (let* ((contestants (getcontestants sectionlabel dir id sections)))
       (concatenate 'string
                    "<tr><td colspan=\"5\">Scorecard for <b>Pair "
@@ -145,7 +151,9 @@
                                       ")")
                          ""))
                    " Ave: "
+                   average
                    " Top: "
+                   top
                    "<br>"
                    (getrankstring "Section" contestants)
                    " "
@@ -163,7 +171,10 @@
   (defun serializedPSC (gamenode boardnodes)
     (let* ((sections (xml-bfsfindnodes (list gamenode) "Section"))
            (results (getAllSeparateResults boardnodes))
-           (gamestring (getgamestring gamenode)))
-      (getAllPairs results sections gamestring gamenode)))
+           (gamestring (getgamestring gamenode))
+           (movement (xml-getnode gamenode "Movement"))
+           (average (xml-gettext (xml-getnode movement "Average")))
+           (top (xml-gettext (xml-getnode movement "Top"))))
+      (getAllPairs results sections gamestring average top gamenode)))
 
   (export Ipsc))
