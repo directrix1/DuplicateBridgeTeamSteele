@@ -115,6 +115,23 @@
                        *rktabletail*
                        (serializedrankings rest)))))
 
+  ;Pulls header information from the game node
+  (defun serializedRankingsHeader (gamenodes)
+    (let* ((Date (xml-gettext (xml-getnode gamenodes "Date")))
+           (Club (xml-gettext (xml-getnode gamenodes "ClubGame")))
+           (Event (xml-gettext (xml-getnode 
+                               (xml-getnode gamenodes "Event")
+                               "EventName"))))
+      (concatenate 'string 
+                   "<p align=\"CENTER\">"
+                   "Rankings - "
+                   Date
+                   "</p>"
+                   "<p align=\"CENTER\">"
+                   Club
+                   " - "
+                   Event
+                   "</p>")))
   ; sectionnodes should be a list of Section nodes
   (defun findspecificsection (sectionnodes label dir)
     (if sectionnodes
@@ -148,9 +165,7 @@
                           (xml-bfsfindnodes (list section) "Contestants")
                           id))
            (players (xml-getnodes contestants "Player")))
-      (concatenate 'string
-                   (xml-gettext (car players))
-                   " - "
-                   (xml-gettext (cadr players)))))
-
+      (concatenate 'string (xml-gettext (car players))
+                           " - "
+                           (xml-gettext (cadr players)))))
   (export Irankings))

@@ -62,11 +62,13 @@
   ; rankings table in an HTML file including each pairs ranking and various
   ; other stats such as matchpoint and percentage score.
   (defun rankings (rnkXML state)
-    (let* ((sections (xml-getnodes (xml-getnode rnkXML "Game") "Section")))
+    (let* ((games (xml-getnode rnkXML "Game")) 
+           (sections (xml-getnodes games "Section")))
       (mv-let (status state)
               (string-list->file (string-append "rnk" ".htm")
                                  (list *htmlhead*
                                        *menu*
+                                       (serializedRankingsHeader games)
 				       (serializedRankings sections)
                                        *htmltail*)
                                  state)
