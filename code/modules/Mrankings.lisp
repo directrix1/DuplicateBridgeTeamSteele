@@ -115,6 +115,26 @@
                        *rktabletail*
                        (serializedrankings rest)))))
 
+  
+  ;Pulls header information from the game node
+  (defun serializedRankingsHeader (gamenodes)
+    (let* ((Date (xml-gettext (xml-getnode gamenodes "Date")))
+           (Club (xml-gettext (xml-getnode gamenodes "ClubGame")))
+           (Event (xml-gettext (xml-getnode 
+                               (xml-getnode gamenodes "Event")
+                               "EventName"))))
+      (concatenate 'string 
+                   "<p align=\"CENTER\">"
+                   "Rankings - "
+                   Date
+                   "</p>"
+                   "<p align=\"CENTER\">"
+                   Club
+                   " - "
+                   Event
+                   "</p>")))
+  
+  
   ; Given a list of nodes, glue all nodes' children together in one big
   ; list; i.e., if the nodes are rooted in some tree where they're at depth
   ; k, then take all of the nodes at depth k+1 (cousins or siblings to one
@@ -171,9 +191,7 @@
                           (bfsfindnodes (list section) "Contestants")
                           id))
            (players (xml-getnodes contestants "Player")))
-      (concatenate 'string
-                   (xml-gettext (car players))
-                   " - "
-                   (xml-gettext (cadr players)))))
-
+      (concatenate 'string (xml-gettext (car players))
+                           " - "
+                           (xml-gettext (cadr players)))))
   (export Irankings))
