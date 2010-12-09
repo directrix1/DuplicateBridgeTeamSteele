@@ -388,10 +388,11 @@
    
    )
 
-  ; Given a list of nodes, glue all nodes' children together in one big
-  ; list; i.e., if the nodes are rooted in some tree where they're at depth
-  ; k, then take all of the nodes at depth k+1 (cousins or siblings to one
-  ; another), and put them into a list together.
+  ;gluekids (nodes)→ Given a list of nodes, glue all nodes' children
+  ;   together in one big list; i.e., if the nodes are rooted in some tree
+  ;   where they're at depth k, then take all of the nodes at depth k+1
+  ;   (cousins or siblings to one another), and put them into a list
+  ;   together.
   (defun gluekids (nodes)
     (if (consp nodes)
       (mv-let (nodename atts kids)
@@ -399,6 +400,8 @@
               (concatenate 'list kids (gluekids (cdr nodes))))
       nil))
 
+  ;xml-bfsfindnodes (nodes nodename) → returns a list of children nodes of type
+  ;    nodename using BFS search that are at the shallowest depth.
   (defun xml-bfsfindnodes (nodes nodename)
     ; Build a dummy node that looks like xmlminidom, so we can act like
     ; nodes are rooted there as children, and we can just use xml-getnodes
