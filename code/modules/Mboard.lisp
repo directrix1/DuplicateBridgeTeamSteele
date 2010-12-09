@@ -218,4 +218,7 @@
                            "")
                        (serializedboards rest trav-flag)))))
 
+  (defun getgamestring (gamenode)
+    "")
+
   (export Iboard))

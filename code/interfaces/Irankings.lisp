@@ -31,11 +31,28 @@
 
 (interface Irankings
   (include Ixmlminidom)
+  (sig getmatchpointtotal (node))
+  (sig sortcontestants (unsortedcontestants))
+  (sig sortmvranks (ranks mvs))
   (sig serializedrankings (rankingnodes))
-  (sig getcontestants (section dir id rankingnodes))
-  (con getrankings-delivers-string
+  ;(sig serializedrankingsheader (gamenodes))
+  (sig getcontestants (section dir id sections))
+  
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;Contracts
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (con getmatchpointtotal-returns-real
+    (implies (xml-isnode mpnode)
+             (real (getmatchpointtotal mpnode))))
+  (con sortcontestants-returns-list
     (implies (xml-isnodelist rankingnodes)
-             (stringp (getrankings rankingnodes))))
+             (listp (sortcontestants rankingnodes))))
+  (con sortmvranks-returns-three
+    (implies (xml-isnodelist rankingnodes)
+             (eq 3 (len (sortmvrankings rankingnodes (mv nil nil nil))))))
+  (con serializedrankings-delivers-string
+    (implies (xml-isnodelist rankingnodes)
+             (stringp (serializedrankings rankingnodes))))
   (con getcontestant-delivers-list-of-strings
     (implies (xml-isnodelist rankingnodes)
              (and (true-listp (getcontestants section dir id rankingnodes))

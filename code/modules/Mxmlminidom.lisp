@@ -105,12 +105,10 @@
   ;xml-serizlize-dom (xmlnode) → Returns a string containing an xml
   ;    document that represents the dom passed in through xmlnode.
   (defun xml-serialize-dom (xmlnode)
-;    (if (xml-isnode xmlnode)
         (string-append
          "<?xml version=\"1.0\"?>"
          (xml-serialize-nodes (list xmlnode)))
     )
-;        ""))
 
   ;xml-unescape (escapedchars) → string with entities replaced
   (defun xml-unescape (escapedchars)
@@ -389,4 +387,28 @@
         (xml-isnodelist (cdr nodes))))))
    
    )
+
+  ; Given a list of nodes, glue all nodes' children together in one big
+  ; list; i.e., if the nodes are rooted in some tree where they're at depth
+  ; k, then take all of the nodes at depth k+1 (cousins or siblings to one
+  ; another), and put them into a list together.
+  (defun gluekids (nodes)
+    (if (consp nodes)
+      (mv-let (nodename atts kids)
+              (car nodes)
+              (concatenate 'list kids (gluekids (cdr nodes))))
+      nil))
+
+  (defun xml-bfsfindnodes (nodes nodename)
+    ; Build a dummy node that looks like xmlminidom, so we can act like
+    ; nodes are rooted there as children, and we can just use xml-getnodes
+    ; on it.
+    (let* ((dummyroot (mv "dummyroot" nil nodes))
+           (maybes (xml-getnodes dummyroot nodename)))
+        (if maybes
+            ; We found them
+            maybes
+            ; There were no nodes.  Look deeper.
+            (xml-bfsfindnodes (gluekids nodes) nodename))))
+
   (export Ixmlminidom))

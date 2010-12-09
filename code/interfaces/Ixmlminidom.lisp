@@ -89,6 +89,8 @@
   
   ;xml-isnodelist (nodes) → returns true iff nodes is a list of nodes
   (sig xml-isnodelist (nodes))
+
+  (sig xml-bfsfindnodes (nodes nodename))
   
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;Contracts
