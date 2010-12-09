@@ -95,7 +95,21 @@
   ; one board separately from the board information without html
   ; serialization where xmlnodes is the list of results for a board,
   ; boardnum is the boardnum,  ns1 and ew1 are the initial lists. It
-  ; returns an FIXME.
+  ; returns a structure like:
+  ; (mv ns ew)
+  ; where
+  ;  ns = (list
+  ;         (cons (mv pairns section)
+  ;               (list
+  ;                 (mv boardnum pairew totalscore pointsns))
+  ;                 ...)
+  ;         ...)
+  ;  ew = (list
+  ;         (cons (mv pairew section)
+  ;               (list
+  ;                 (mv boardnum pairns totalscore pointsns))
+  ;                 ...)
+  ;         ...)
   (defun getseparateresults (xmlnodes boardnum ns1 ew1)
     (if (null xmlnodes)
         (mv ns1 ew1)
@@ -138,8 +152,22 @@
                                          (cdr ewkv)))
                             (remove-equal ewkv ew))))))))
   
-  ; getallseparateresults (xmlnodes) → converts boardnodes, a list of Board
-  ; nodes, to a sequence of FIXME 
+  ; getallseparateresults (boardnodes) → converts boardnodes, a list of
+  ; Board nodes, to a sequence like:
+  ; (mv ns ew)
+  ; where
+  ;  ns = (list
+  ;         (cons (mv pairns section)
+  ;               (list
+  ;                 (mv boardnum pairew totalscore pointsns))
+  ;                 ...)
+  ;         ...)
+  ;  ew = (list
+  ;         (cons (mv pairew section)
+  ;               (list
+  ;                 (mv boardnum pairns totalscore pointsns))
+  ;                 ...)
+  ;         ...)
   (defun getallseparateresults (boardnodes)
     (if (null boardnodes)
         (mv nil nil)
