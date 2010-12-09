@@ -23,7 +23,9 @@
   (defun boards-no-trav (bntXML state)
     (mv-let (status state)
             (string-list->file (string-append "boards-no-trav" ".htm")
-                               (list *htmlhead*
+                               (list *htmlhd1*
+                                     "Boards without Travelers"
+                                     *htmlhd2*
                                      *menu*
                                      (serializedboards 
                                        (xml-getnodes (xml-getnode
@@ -49,7 +51,9 @@
                                    "Board")))
       (mv-let (status state)
               (string-list->file (string-append "boards-trav" ".htm")
-                                 (list *htmlhead*
+                                 (list *htmlhd1*
+                                       "Boards with Travelers"
+                                       *htmlhd2*
                                        *menu*
 				       (serializedboards boardnode 1)
                                        *htmltail*)
@@ -66,7 +70,9 @@
            (sections (xml-getnodes games "Section")))
       (mv-let (status state)
               (string-list->file (string-append "rnk" ".htm")
-                                 (list *htmlhead*
+                                 (list *htmlhd1*
+                                       "Rankings"
+                                       *htmlhd2*
                                        *menu*
                                        (serializedRankingsHeader games)
 				       (serializedRankings sections)
@@ -87,7 +93,9 @@
                                      "Board")))
       (mv-let (status state)
               (string-list->file (string-append "psc" ".htm")
-                                 (list *htmlhead*
+                                 (list *htmlhd1*
+                                       "Personal Score Cards"
+                                       *htmlhd2*
                                        *menu*
 				       (serializedPSC gamenode boardnodes)
                                        *htmltail*)
