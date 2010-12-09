@@ -170,8 +170,10 @@
                                                      "MatchpointsEW"))))
             (concatenate 'string
                          "<tr>"
-                         "<td>" section pairns "</td>"
-                         "<td>" section pairew "</td>"
+                         "<td><a href=\"psc.htm#N-S" pairns section "\">"
+                         section pairns "</a></td>"
+                         "<td><a href=\"psc.htm#E-W" pairew section "\">"
+                         section pairew "</td>"
                          "<td>" (if (string-equal totaldir "N-S")
                                     totalscore
                                     "&nbsp;")
@@ -200,13 +202,15 @@
                (results (xml-getnodes board "Result")))
           (concatenate 'string 
                        *div-open-1*
-                       "board"
+                       "board\" id=\"" boardnum
                        *div-open-2*
                        *div-open-1*
                        "boardnum"
                        *div-open-2*
-                       "Board: "
-                       boardnum
+                       (if (equal trav-flag 1)
+                           "<a href=\"boards-no-trav.htm#"
+                           "<a href=\"boards-trav.htm#")
+                        boardnum "\">Board: " boardnum "</a>"
                        *div-close*
                        (serializedhands hands vulnerable dealer)
                        *div-close*
