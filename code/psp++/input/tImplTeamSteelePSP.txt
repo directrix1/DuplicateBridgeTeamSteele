@@ -397,6 +397,10 @@ defect log:
 	  fix time: 25
 	  comment: Made significant formatting changes to all html, centered output and table width.
 
+	- date: Dec 8, 2010
+	  type: Syntax
+	  fix time: 10
+	  comment: Improper signatures for new functions
 
 
 actual added lines: 0
