@@ -11,7 +11,8 @@
 
  (defconst *menu*
     (concatenate 'string
-     "<table class=\"results\"><tr>" ;border=\"1\" cellspacing=\"20\">"
+     "<table  cellspacing=\"25\""
+     "text-align: center; width: 100%;>"
      "<tr>"
      "<th><a href=\"boards-no-trav.htm\">Boards Without Travelers</a></th>"
      "<th><a href=\"boards-trav.htm\">Boards With Travelers</a></th>"
@@ -19,6 +20,7 @@
      "<th><a href=\"psc.htm\">Personal Score Cards</a></th>"
      "</tr>"
      "</table>"
+          "<hr/>"
      ))
 (defconst *div-open-1* "<div class=\"")
   (defconst *div-open-2* "\">")
