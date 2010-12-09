@@ -36,7 +36,7 @@
   (sig sortmvranks (ranks mvs))
   (sig serializedrankings (rankingnodes))
   ;(sig serializedrankingsheader (gamenodes))
-  (sig getcontestants (section dir id rankingnodes))
+  (sig getcontestants (section dir id sections))
   
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;Contracts
@@ -45,6 +45,7 @@
     (implies (xml-isnode mpnode)
              (real (getmatchpointtotal mpnode))))
   (con sortcontestants-returns-list
+  (con getrankings-delivers-string
     (implies (xml-isnodelist rankingnodes)
              (listp (sortcontestants rankingnodes))))
   (con sortmvranks-returns-three

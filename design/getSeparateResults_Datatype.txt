@@ -1,0 +1,18 @@
+getSeparateResults and getAllSeparateResults return value:
+(mv ns ew)
+where
+ ns = (list
+        (cons (mv pairns section)
+              (list
+                (mv boardnum pairew totalscore pointsns))
+                ...)
+        ...)
+ ew = (list
+        (cons (mv pairew section)
+              (list
+                (mv boardnum pairns totalscore pointsns))
+                ...)
+        ...)
+
+Lookup:
+(assoc-equal ns (mv pairid section))

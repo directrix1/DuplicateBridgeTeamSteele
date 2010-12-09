@@ -117,6 +117,7 @@
   ; “results” tables from the xmlnode “Board” and “results” formatted to
   ; be rendered with the deal and results as required by description
   (sig serializedboards (xmlnodes trav-flag))
+  (sig getgamestring (gamenode))
 )
   
   
