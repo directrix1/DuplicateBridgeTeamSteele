@@ -36,7 +36,8 @@
         (let* ((sbrd (car rbrds))
                (rest (cdr rbrds))
                (id (second sbrd))
-               (players (getcontestants sectionlabel dir id sections)))
+               (contestants (getcontestants sectionlabel dir id sections))
+               (players (getcontestantsnames contestants)))
           (concatenate 'string
                        "<tr>"
                        "<td><a href=\"boards-trav.htm#" (first sbrd) "\">"
@@ -74,37 +75,66 @@
       (if (null nextew)
           ""
           (if (null nextns)
-              (concatenate 'string
-                           *psctableheadpre*
-                           "E-W" (car keyew) (cadr keyew)
-                           *psctableheadpost*
-                           ;get info from gamenode
-                           (getBoardsForPair (car keyew)
-                                             (cadr keyew)
-                                             ew
-                                             sections
-                                             "N-S") ; The *opponents'* dir.
-                           (pscfooter gamestring)
-                           *psctabletail*
-                           (getAllPairs (mv ns restew)
-                                        sections
-                                        gamestring
-                                        gamenode))
-              (concatenate 'string
-                           *psctableheadpre*
-                           "N-S" (car keyns) (cadr keyns)
-                           *psctableheadpost*
-                           (getBoardsForPair (car keyns)
-                                             (cadr keyns)
-                                             ns
-                                             sections
-                                             "E-W")
-                           (pscfooter gamestring)
-                           *psctabletail*
-                           (getAllPairs (mv restns ew)
-                                        sections
-                                        gamestring
-                                        gamenode))))))
+              (let* ((pairid (car keyew))
+                     (sectionlabel (cadr keyew)))
+                (concatenate 'string
+                             *psctableheadpre*
+                             "E-W" (car keyew) (cadr keyew)
+                             *psctableheadpost*
+                             (pscheader sectionlabel "E-W" pairid sections)
+                             *psctableheadcontents*
+                             ;get info from gamenode
+                             (getBoardsForPair pairid
+                                               sectionlabel
+                                               ew           ; results
+                                               sections
+                                               "N-S") ; The *opponents'* dir.
+                             (pscfooter gamestring)
+                             *psctabletail*
+                             (getAllPairs (mv ns restew)
+                                          sections
+                                          gamestring
+                                          gamenode)))
+              (let* ((pairid (car keyns))
+                     (sectionlabel (cadr keyns)))
+                (concatenate 'string
+                             *psctableheadpre*
+                             "N-S" (car keyns) (cadr keyns)
+                             *psctableheadpost*
+                             (pscheader sectionlabel "N-S" pairid sections)
+                             *psctableheadcontents*
+                             (getBoardsForPair pairid
+                                               sectionlabel
+                                               ns           ; results
+                                               sections
+                                               "E-W")
+                             (pscfooter gamestring)
+                             *psctabletail*
+                             (getAllPairs (mv restns ew)
+                                          sections
+                                          gamestring
+                                          gamenode)))))))
+
+  (defun pscheader (sectionlabel dir id sections)
+    (let* ((contestants (getcontestants sectionlabel dir id sections)))
+      (concatenate 'string
+                   "<tr><td colspan=\"5\">Scorecard for <b>Pair "
+                   sectionlabel
+                   id
+                   " "
+                   dir
+                   " (strat "
+                   ; need strat info here
+                   ")</b></td></tr><br>"
+                   "<tr><td colspan=\"5\">"
+                      (getcontestantsnames contestants)
+                   "</td></tr><br>"
+                   "<tr><td colspan=\"3\">Score: "
+                   "</td>Ave: "
+                   "<td>"
+                   "</td>"
+                   "<td>Top: "
+                   "</td></tr>")))
 
   (defun pscfooter (gamestring)
     (concatenate 'string "<tr><td colspan=\"5\">" gamestring "</td></tr>"))

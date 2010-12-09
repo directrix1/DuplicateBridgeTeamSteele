@@ -167,18 +167,19 @@
               (findspecificcontestants (cdr nodes) id)))
         nil))
   
+  (defun getcontestants (sectionlabel dir id sections)
+    (let* ((section (findspecificsection sections sectionlabel dir)))
+      (findspecificcontestants
+                         (xml-bfsfindnodes (list section) "Contestants")
+                         id)))
+
   ; For the two players in a Contestants element, delivers a string in the
   ; form "Alice - Bob".
-  ; sections is a list of Section nodes
-  (defun getcontestants (sectionlabel dir id sections)
-    (let* ((section (findspecificsection sections
-                                         sectionlabel
-                                         dir))
-           (contestants (findspecificcontestants
-                         (xml-bfsfindnodes (list section) "Contestants")
-                         id))
-           (players (xml-getnodes contestants "Player")))
+  ; Contestants is the Contestants node
+  (defun getcontestantsnames (contestants)
+    (let* ((players (xml-getnodes contestants "Player")))
       (concatenate 'string (xml-gettext (car players))
                    " - "
                    (xml-gettext (cadr players)))))
+
   (export Irankings))
