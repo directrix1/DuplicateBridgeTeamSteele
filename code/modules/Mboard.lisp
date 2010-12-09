@@ -236,6 +236,6 @@
            (session (xml-gettext (xml-getnode gamenode "Session")))
            (date (xml-gettext (xml-getnode gamenode "Date"))))
       (concatenate 'string 
-                   clubgame " " eventname " " session " " date)))
+                   clubgame " " eventname ", " session ", " date)))
 
   (export Iboard))

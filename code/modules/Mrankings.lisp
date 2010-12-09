@@ -186,9 +186,9 @@
     (if (< 0 (len ranksoftype))
       (let* ((rank (car ranksoftype)))
         (concatenate 'string
-                     (xml-getattribute rank "Strat")
-                     "("
                      (xml-gettext rank)
+                     "("
+                     (xml-getattribute rank "Strat")
                      ")"
                      (getranks (cdr ranksoftype))))
 
