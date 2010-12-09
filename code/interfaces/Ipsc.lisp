@@ -55,7 +55,7 @@
   
   ;;;
   ;;;
-  (sig getAllPairs (results sections gamestring gamenode))
+  (sig getAllPairs (results sections gamestring average top gamenode))
   #|
   (con getPSC-con1
        (implies ()
