@@ -6,8 +6,25 @@
 # be at the bottom. PSP++ will generate a report for the final project listed, using
 # previous projects as historical data.
 
-iEx1
-iEx2
-iEx3
-iEx4
-iEx5
+iEx1b
+iEx1e
+iex1m
+iEx2b
+iEx2e
+iex2m
+iEx3b
+iEx3e
+iEx3k
+iex3m
+iEx3z
+iEx4b
+iEx4e
+iEx4k
+iex4m
+iEx4z
+iEx5b
+iEx5e
+iEx5k
+iex5m
+iex5z
+tImplTeamSteelePSP
