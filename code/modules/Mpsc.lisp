@@ -43,8 +43,7 @@
                        "<td><a href=\"boards-trav.htm#" (first sbrd) "\">"
                             (first sbrd)    "</a></td>"    ; boardnum
                        "<td><a href=\"psc.htm#"
-                       (if (string-equal dir "N-S") "E-W" "N-S")
-                       id sectionlabel "\">"
+                       dir id sectionlabel "\">"
                        sectionlabel id "</a></td>"    ; vs. info
                        "<td>" players         "</td>"    ; names
                        "<td>" (third sbrd)    "</td>"    ; score
