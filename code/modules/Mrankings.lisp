@@ -73,7 +73,7 @@
           (concatenate 'string
                        "<tr>"
                        "<td>" pairno "</td>"
-                       "<td>" player1 " - " player2 "</td>"
+                       "<td>" player1 "<br />" player2 "</td>"
                        "<td>" strat "</td>"
                        (mv-let (a b c)
                                (sortmvranks sectionranks
