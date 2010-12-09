@@ -11,9 +11,10 @@
 
 (require "Ixmlminidom.lisp")
 
-(defconst *psctablehead*
+(defconst *psctableheadpre* "<table id=\"")
+(defconst *psctableheadpost*
     (concatenate 'string
-      "<table class=\"results\"><tr>"
+      "\" class=\"results\"><tr>"
       "<th>Brd</th>"
       "<th colspan=\"2\">Versus</th>"
       "<th>Score</th>"

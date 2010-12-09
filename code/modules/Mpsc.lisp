@@ -39,7 +39,8 @@
                (players (getcontestants sectionlabel dir id sections)))
           (concatenate 'string
                        "<tr>"
-                       "<td>" (first sbrd)    "</td>"    ; boardnum
+                       "<td><a href=\"boards-trav.htm#" (first sbrd) "\">"
+                            (first sbrd)    "</a></td>"    ; boardnum
                        "<td>" sectionlabel id "</td>"    ; vs. info
                        "<td>" players         "</td>"    ; names
                        "<td>" (third sbrd)    "</td>"    ; score
@@ -71,7 +72,9 @@
           ""
           (if (null nextns)
               (concatenate 'string
-                           *psctablehead*
+                           *psctableheadpre*
+                           "E-W" (car keyew) (cadr keyew)
+                           *psctableheadpost*
                            ;get info from gamenode
                            (getBoardsForPair (car keyew)
                                              (cadr keyew)
@@ -84,7 +87,9 @@
                                         sections
                                         gamestring))
               (concatenate 'string
-                           *psctablehead*
+                           *psctableheadpre*
+                           "N-S" (car keyns) (cadr keyns)
+                           *psctableheadpost*
                            (getBoardsForPair (car keyns)
                                              (cadr keyns)
                                              ns

@@ -112,6 +112,24 @@ time log:
 	  phase: code
 	  comment: Colby worked on getcontestants and above, Micah worked on cleaning up the CSS. 
 
+	- date: Dec 7, 2010
+	  start time: 3:00PM
+	  end time: 6:00PM
+	  phase: code
+	  comment: Colby and Zach fixed PSC to display names for IDs in the "Versus" column. Group worked on contracts. 
+
+	- date: Dec 7, 2010
+	  start time: 9:00PM
+	  end time: 11:00PM
+	  phase: code
+	  comment: Ed worked on Ixmlminidom and created a working property function as well as functions that create "dummy" xml data.
+
+	- date: Dec 8, 2010
+	  start time: 5:00PM
+	  end time: 11:00PM
+	  phase: code
+	  comment: Zach wrote contracts for Irankings, Colby cleaned up all files. Micah worked on header for Rankings. Worked on contracts for all modules.
+
 new objects:
 
 	- name: xml-getallnodes
@@ -359,7 +377,29 @@ defect log:
 	  fix time: 30
 	  comment: Fixed error where Rankings function sortmvranks was taking in the wrong order of ranks (such as Section / Overall).
 
+	- date: Dec 8, 2010
+	  type: Conceptual
+	  fix time: 10
+	  comment: Moved bfsfindnodes out of rankings and into xmlminidom (personal score cards module now uses and made sense).
+
+	- date: Dec 8, 2010
+	  type: Conceptual
+	  fix time: 10
+	  comment: Moved bfsfindnodes out of rankings and into xmlminidom (personal score cards module now uses and made sense).
+	
+	- date: Dec 8, 2010
+	  type: Conceptual
+	  fix time: 15
+	  comment: Fixed formatting in link header for all files.
+
+	- date: Dec 8, 2010
+	  type: Conceptual
+	  fix time: 25
+	  comment: Made significant formatting changes to all html, centered output and table width.
+
+
+
 actual added lines: 0
-actual base lines: 0
+actual base lines: 394
 actual modified lines: 0
 actual removed lines: 0
