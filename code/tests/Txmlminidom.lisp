@@ -18,7 +18,10 @@
   
   (include-book "testing" :dir :teachpacks)
   (include-book "doublecheck" :dir :teachpacks)
+  (include-book "audio" :dir :teachpacks)
   
+  ;(play-wav "ragtime.wav" t)
+   
   (defconst
     *Oface*
     "<bob><slidell id=\"porter\">12 &amp; 3<jumptoconclusions /></slidell></bob>")

@@ -105,12 +105,10 @@
   ;xml-serizlize-dom (xmlnode) → Returns a string containing an xml
   ;    document that represents the dom passed in through xmlnode.
   (defun xml-serialize-dom (xmlnode)
-;    (if (xml-isnode xmlnode)
         (string-append
          "<?xml version=\"1.0\"?>"
          (xml-serialize-nodes (list xmlnode)))
     )
-;        ""))
 
   ;xml-unescape (escapedchars) → string with entities replaced
   (defun xml-unescape (escapedchars)
