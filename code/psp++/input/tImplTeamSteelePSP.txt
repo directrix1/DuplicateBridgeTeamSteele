@@ -1,6 +1,6 @@
 name: Zach Bartlett
 date: Nov 11, 2010
-program: tDsgn
+program: tImplTeamSteele
 instructor: Dr. Page
 
 time log:
@@ -124,11 +124,11 @@ time log:
 	  phase: code
 	  comment: Ed worked on Ixmlminidom and created a working property function as well as functions that create "dummy" xml data.
 
-	- date: Dec 8, 2010
-	  start time: 5:00PM
-	  end time: 11:00PM
+	- date: Dec 9, 2010
+	  start time: 11:45AM
+	  end time: 3:00PM
 	  phase: code
-	  comment: Zach wrote contracts for Irankings, Colby cleaned up all files. Micah worked on header for Rankings. Worked on contracts for all modules. Ed fixed cross links across the documents based on player ID, board no, etc.
+	  comment: Finished up contracts, cleaned up design, worked on finalizing psp, made final changes to headers for psc cards.
 
 new objects:
 
@@ -144,8 +144,16 @@ new objects:
 	  estimated lines: 7
 	  type: Calculation
 
+	- name: getgamestring
+	  estimated lines: 7
+	  type: Calculation
+
 	- name: serializedPSC
 	  estimated lines: 4
+	  type: Calculation
+
+	- name: pscheader
+	  estimated lines: 41
 	  type: Calculation
 
 	- name: getAllPairs
@@ -170,6 +178,34 @@ new objects:
 
 	- name: serializedrankings
 	  estimated lines: 7
+	  type: Calculation
+
+	- name: getcontestantnames
+	  estimated lines: 4
+	  type: Calculation
+
+	- name: findspecificsection
+	  estimated lines: 7
+	  type: Calculation
+
+	- name: findspecificcontestants
+	  estimated lines: 7
+	  type: Calculation
+
+	- name: getranks
+	  estimated lines: 7
+	  type: Calculation
+
+	- name: getrankstring
+	  estimated lines: 7
+	  type: Calculation
+
+	- name: getrankstring
+	  estimated lines: 7
+	  type: Calculation
+
+	- name: serializedrankingsheader
+	  estimated lines: 16
 	  type: Calculation
 
 	- name: serializedcontestants
@@ -211,6 +247,26 @@ new objects:
 	- name: main
 	  estimated lines: 16
 	  type: I/O
+
+	- name: xml-serialize-attributes
+	  estimated lines: 7
+	  type: Calculation
+
+	- name: xml-serialize-nodes
+	  estimated lines: 7
+	  type: Calculation
+
+	- name: xml-getdeepnode
+	  estimated lines: 7
+	  type: Calculation
+
+	- name: glue-kids
+	  estimated lines: 4
+	  type: Calculation
+
+	- name: xml-bfsfindnodes
+	  estimated lines: 7
+	  type: Calculation
 
 reused objects:
 
@@ -381,11 +437,6 @@ defect log:
 	  type: Conceptual
 	  fix time: 10
 	  comment: Moved bfsfindnodes out of rankings and into xmlminidom (personal score cards module now uses and made sense).
-
-	- date: Dec 8, 2010
-	  type: Conceptual
-	  fix time: 10
-	  comment: Moved bfsfindnodes out of rankings and into xmlminidom (personal score cards module now uses and made sense).
 	
 	- date: Dec 8, 2010
 	  type: Conceptual
@@ -402,8 +453,18 @@ defect log:
 	  fix time: 10
 	  comment: Improper signatures for new functions
 
+	- date: Dec 8, 2010
+	  type: Conceptual
+	  fix time: 20
+	  comment: Fixed sigs for many functions that were being modified.
 
-actual added lines: 0
+	- date: Dec 8, 2010
+	  type: Banjos
+	  fix time: 15
+	  comment: Fixed length of ragtime.wav to match property test time.
+
+
+actual added lines: 1515
 actual base lines: 394
-actual modified lines: 0
-actual removed lines: 0
+actual modified lines: 183
+actual removed lines: 10
