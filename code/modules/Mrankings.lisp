@@ -21,13 +21,13 @@
                 (getmatchpointtotal (car lst))))
         (cons a lst)
         (cons (car lst) (insert-sorted a (cdr lst)))))
-
+  
   ; This function sorts the contestants by MatchPointTotal
   (defun sortcontestants (unsortedcontestants)
     (if (null unsortedcontestants)
         nil
         (let* ((contestant (car unsortedcontestants))
-                (rest (cdr unsortedcontestants)))
+               (rest (cdr unsortedcontestants)))
           (insert-sorted contestant (sortcontestants rest)))))
   
   (defun sortmvranks (ranks mvs)
@@ -38,17 +38,17 @@
           (mv-let (a b c)
                   mvs
                   (sortmvranks
-                    rest
-                    (mv
-                     (if (equal (xml-getattribute rank "Strat") "A")
-                         (xml-gettext rank)
-                         a)
-                     (if (equal (xml-getattribute rank "Strat") "B")
-                         (xml-gettext rank)
-                         b)
-                     (if (equal (xml-getattribute rank "Strat") "C")
-                         (xml-gettext rank)
-                         c)))))))
+                   rest
+                   (mv
+                    (if (equal (xml-getattribute rank "Strat") "A")
+                        (xml-gettext rank)
+                        a)
+                    (if (equal (xml-getattribute rank "Strat") "B")
+                        (xml-gettext rank)
+                        b)
+                    (if (equal (xml-getattribute rank "Strat") "C")
+                        (xml-gettext rank)
+                        c)))))))
   
   (defun serializedcontestants (contestants)
     (if (null contestants)
@@ -79,17 +79,17 @@
                                (sortmvranks sectionranks
                                             (mv "&nbsp;" "&nbsp;"
                                                 "&nbsp;" ))
-                         (concatenate 'string
-                                      "<td>" a "</td>"
-                                      "<td>" b "</td>"
-                                      "<td>" c "</td>"))
+                               (concatenate 'string
+                                            "<td>" a "</td>"
+                                            "<td>" b "</td>"
+                                            "<td>" c "</td>"))
                        (mv-let (a b c)
-                         (sortmvranks overallranks
-                                      (mv "&nbsp;" "&nbsp;" "&nbsp;" ))
-                         (concatenate 'string
-                                      "<td>" a "</td>"
-                                      "<td>" b "</td>"
-                                      "<td>" c "</td>"))
+                               (sortmvranks overallranks
+                                            (mv "&nbsp;" "&nbsp;" "&nbsp;" ))
+                               (concatenate 'string
+                                            "<td>" a "</td>"
+                                            "<td>" b "</td>"
+                                            "<td>" c "</td>"))
                        "<td>" matchpoint "</td>"
                        "<td>" percentage "</td>"
                        "<td>" masterpoint "</td>"
@@ -105,55 +105,64 @@
         (let* ((ranking (car rankingnodes))
                (rest (cdr rankingnodes))
                (unsortedcontestants (xml-getnodes
-                                      (xml-getnode ranking "Rankings")
-                                      "Contestants"))
+                                     (xml-getnode ranking "Rankings")
+                                     "Contestants"))
                (contestanthtml (serializedcontestants
-                                 (sortcontestants unsortedcontestants))))
+                                (sortcontestants unsortedcontestants))))
           (concatenate 'string
                        *rktablehead*
+                       "<p align=\"CENTER\">"
+                       "Section "
+                       (xml-getattribute 
+                        ranking
+                        "SectionLabel")
+                       "  --  "
+                       (xml-getattribute 
+                        ranking
+                        "Direction")
+                       "</p>"
                        contestanthtml
                        *rktabletail*
                        (serializedrankings rest)))))
-
+  
   ;Pulls header information from the game node
   (defun serializedRankingsHeader (gamenodes)
     (let* ((Date (xml-gettext (xml-getnode gamenodes "Date")))
            (Club (xml-gettext (xml-getnode gamenodes "ClubGame")))
            (Event (xml-gettext (xml-getnode 
-                               (xml-getnode gamenodes "Event")
-                               "EventName"))))
+                                (xml-getnode gamenodes "Event")
+                                "EventName"))))
       (concatenate 'string 
-                   "<p align=\"CENTER\">"
+                   "<h4 align=\"CENTER\">"
                    "Rankings - "
                    Date
-                   "</p>"
-                   "<p align=\"CENTER\">"
+                   "<br />"
                    Club
                    " - "
                    Event
-                   "</p>")))
+                   "</h4>")))
   ; sectionnodes should be a list of Section nodes
   (defun findspecificsection (sectionnodes label dir)
     (if sectionnodes
-      ; linear search!
-      (let* ((current (car sectionnodes)))
-        (if (and (equal (xml-getattribute current "SectionLabel")
-                        label)
-                 (equal (xml-getattribute current "Direction")
-                        dir))
-            current
-            (findspecificsection (cdr sectionnodes) label dir)))
-      nil))
-
+        ; linear search!
+        (let* ((current (car sectionnodes)))
+          (if (and (equal (xml-getattribute current "SectionLabel")
+                          label)
+                   (equal (xml-getattribute current "Direction")
+                          dir))
+              current
+              (findspecificsection (cdr sectionnodes) label dir)))
+        nil))
+  
   ; nodes should be a list of Contestants nodes
   (defun findspecificcontestants (nodes id)
     (if nodes
-      (let* ((current (car nodes)))
-        (if (equal (xml-getattribute current "ID") id)
-            current
-            (findspecificcontestants (cdr nodes) id)))
-      nil))
-
+        (let* ((current (car nodes)))
+          (if (equal (xml-getattribute current "ID") id)
+              current
+              (findspecificcontestants (cdr nodes) id)))
+        nil))
+  
   ; For the two players in a Contestants element, delivers a string in the
   ; form "Alice - Bob".
   ; sections is a list of Section nodes
@@ -162,10 +171,10 @@
                                          sectionlabel
                                          dir))
            (contestants (findspecificcontestants
-                          (xml-bfsfindnodes (list section) "Contestants")
-                          id))
+                         (xml-bfsfindnodes (list section) "Contestants")
+                         id))
            (players (xml-getnodes contestants "Player")))
       (concatenate 'string (xml-gettext (car players))
-                           " - "
-                           (xml-gettext (cadr players)))))
+                   " - "
+                   (xml-gettext (cadr players)))))
   (export Irankings))
