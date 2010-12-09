@@ -1,3 +1,7 @@
+;; The first four lines of this file were added by Dracula.
+;; They tell DrScheme that this is a Dracula Modular ACL2 program.
+;; Leave these lines unchanged so that DrScheme can properly load this file.
+#reader(planet "reader.ss" ("cce" "dracula.plt") "modular" "lang")
 #| Team Steele
    Software Engineering I
    Txmlminidom
@@ -5,12 +9,16 @@
    Software that creates a document object model from XML input.
 |#
 
-(require "../interfaces/iBoard.lisp")
-(require "../modules/mBoard.lisp")
+;(require "../interfaces/Iboard.lisp")
+(require "../modules/Mboard.lisp")
+;(require "../interfaces/Ibasiclex.lisp")
 (require "../modules/Mbasiclex.lisp")
+;(require "../interfaces/Ixmlminidom.lisp")
+(require "../modules/Mxmlminidom.lisp")
+
 
 (module tBoard
-  (import iBoard)
+  (import Iboard)
   
   (include-book "testing" :dir :teachpacks)
 ;=======================SANITY CHECKS===============================;   
@@ -223,6 +231,6 @@
   )
   
   (link Test
-        (Mbasiclex mBoard tBoard))
+        (Mbasiclex Mboard tboard))
   
   (invoke Test)
