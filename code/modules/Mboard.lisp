@@ -223,6 +223,12 @@
                        (serializedboards rest trav-flag)))))
 
   (defun getgamestring (gamenode)
-    "")
+    (let* ((clubgame (xml-gettext (xml-getnode gamenode "ClubGame")))
+           (eventname (xml-gettext (xml-getnode (xml-getnode gamenode "Event")
+                                                "EventName")))
+           (session (xml-gettext (xml-getnode gamenode "Session")))
+           (date (xml-gettext (xml-getnode gamenode "Date"))))
+      (concatenate 'string 
+                   clubgame " " eventname " " session " " date)))
 
   (export Iboard))
