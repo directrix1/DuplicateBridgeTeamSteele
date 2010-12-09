@@ -124,16 +124,33 @@
                    " "
                    dir
                    " (strat "
-                   ; need strat info here
-                   ")</b></td></tr><br>"
-                   "<tr><td colspan=\"5\">"
+                   (xml-getattribute contestants "Strat")
+                   ")</b><br>"
                       (getcontestantsnames contestants)
-                   "</td></tr><br>"
-                   "<tr><td colspan=\"3\">Score: "
-                   "</td>Ave: "
-                   "<td>"
-                   "</td>"
-                   "<td>Top: "
+                   "<br>"
+                   " Score: "
+                      (xml-gettext (xml-getnode contestants "MatchpointTotal"))
+                      " ("
+                      (xml-gettext (xml-getnode contestants "Percentage"))
+                      "%) "
+                   (let* ((award (xml-getnode contestants "Award")))
+                     (if award
+                         (concatenate 'string
+                                      "MP: "
+                                      (xml-getattribute award "TypeOfAward")
+                                      " "
+                                      (xml-gettext award)
+                                      " ("
+                                      (xml-getattribute award "AwardCategory")
+                                      (xml-getattribute award "AwardStrat")
+                                      ")")
+                         ""))
+                   " Ave: "
+                   " Top: "
+                   "<br>"
+                   (getrankstring "Section" contestants)
+                   " "
+                   (getrankstring "Overall" contestants)
                    "</td></tr>")))
 
   (defun pscfooter (gamestring)

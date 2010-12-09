@@ -38,6 +38,7 @@
   (sig serializedrankingsheader (gamenodes))
   (sig getcontestants (section dir id sections))
   (sig getcontestantsnames (contestants))
+  (sig getrankstring (ranktype contestants))
   
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;Contracts

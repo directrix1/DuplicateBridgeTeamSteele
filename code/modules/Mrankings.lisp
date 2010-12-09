@@ -182,4 +182,25 @@
                    " - "
                    (xml-gettext (cadr players)))))
 
+  (defun getranks (ranksoftype)
+    (if (< 0 (len ranksoftype))
+      (let* ((rank (car ranksoftype)))
+        (concatenate 'string
+                     (xml-getattribute rank "Strat")
+                     "("
+                     (xml-gettext rank)
+                     ")"
+                     (getranks (cdr ranksoftype))))
+
+      ""))
+
+  (defun getrankstring (ranktype contestants)
+    (let* ((ranks (getranks (xml-getnodes contestants
+                                          (concatenate 'string
+                                                       ranktype
+                                                       "Rank")))))
+      (if (< 0 (length ranks))
+         (concatenate 'string ranktype " Rank: " ranks)
+         "")))
+
   (export Irankings))
