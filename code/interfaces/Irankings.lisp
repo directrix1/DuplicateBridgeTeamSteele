@@ -45,7 +45,6 @@
     (implies (xml-isnode mpnode)
              (real (getmatchpointtotal mpnode))))
   (con sortcontestants-returns-list
-  (con getrankings-delivers-string
     (implies (xml-isnodelist rankingnodes)
              (listp (sortcontestants rankingnodes))))
   (con sortmvranks-returns-three
