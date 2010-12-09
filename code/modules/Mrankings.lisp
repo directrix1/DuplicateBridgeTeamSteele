@@ -50,7 +50,7 @@
                         (xml-gettext rank)
                         c)))))))
   
-  (defun serializedcontestants (contestants)
+  (defun serializedcontestants (contestants section direction)
     (if (null contestants)
         ""
         (let* ((contestant (car contestants))
@@ -72,7 +72,8 @@
                                 mpvalue)))
           (concatenate 'string
                        "<tr>"
-                       "<td>" pairno "</td>"
+                       "<td><a href=\"psc.htm#" direction pairno section
+                       "\">" pairno "</a></td>"
                        "<td>" player1 "<br />" player2 "</td>"
                        "<td>" strat "</td>"
                        (mv-let (a b c)
@@ -94,7 +95,7 @@
                        "<td>" percentage "</td>"
                        "<td>" masterpoint "</td>"
                        "</tr>"
-                       (serializedcontestants rest)))))
+                       (serializedcontestants rest section direction)))))
   
   ; XXX rankingnodes is a bad misnomer.  rankingnodes should definitely
   ; *not* be a list of Rankings nodes.  At a minimum, we need the Section
@@ -104,22 +105,25 @@
         ""
         (let* ((ranking (car rankingnodes))
                (rest (cdr rankingnodes))
+               (section (xml-getattribute 
+                        ranking
+                        "SectionLabel"))
+               (direction (xml-getattribute 
+                        ranking
+                        "Direction"))
                (unsortedcontestants (xml-getnodes
                                      (xml-getnode ranking "Rankings")
                                      "Contestants"))
                (contestanthtml (serializedcontestants
-                                (sortcontestants unsortedcontestants))))
+                                (sortcontestants unsortedcontestants)
+                                section direction)))
           (concatenate 'string
                        *rktablehead*
                        "<p align=\"CENTER\">"
                        "Section "
-                       (xml-getattribute 
-                        ranking
-                        "SectionLabel")
+                       section
                        "  --  "
-                       (xml-getattribute 
-                        ranking
-                        "Direction")
+                       direction
                        "</p>"
                        contestanthtml
                        *rktabletail*
