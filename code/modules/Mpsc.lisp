@@ -62,7 +62,7 @@
 
   ;;;
   ;;;
-  (defun getAllPairs (results sections gamestring)
+  (defun getAllPairs (results sections gamestring gamenode)
     (let* ((ns (car results))
            (ew (cadr results))
            (nextns (car ns))
@@ -84,11 +84,12 @@
                                              ew
                                              sections
                                              "N-S") ; The *opponents'* dir.
-                           "<tfoot><tr>" gamestring "</tr></tfoot>"
+                           (pscfooter gamestring)
                            *psctabletail*
                            (getAllPairs (mv ns restew)
                                         sections
-                                        gamestring))
+                                        gamestring
+                                        gamenode))
               (concatenate 'string
                            *psctableheadpre*
                            "N-S" (car keyns) (cadr keyns)
@@ -98,11 +99,15 @@
                                              ns
                                              sections
                                              "E-W")
-                           "<tfoot><tr>" gamestring "</tr></tfoot>"
+                           (pscfooter gamestring)
                            *psctabletail*
                            (getAllPairs (mv restns ew)
                                         sections
-                                        gamestring))))))
+                                        gamestring
+                                        gamenode))))))
+
+  (defun pscfooter (gamestring)
+    (concatenate 'string "<tr><td colspan=\"5\">" gamestring "</td></tr>"))
   
   ;Pulls the Personal Score Card data for all players, and put's them all
   ;into html table format
@@ -113,6 +118,6 @@
     (let* ((sections (xml-bfsfindnodes (list gamenode) "Section"))
            (results (getAllSeparateResults boardnodes))
            (gamestring (getgamestring gamenode)))
-      (getAllPairs results sections gamestring)))
+      (getAllPairs results sections gamestring gamenode)))
 
   (export Ipsc))
