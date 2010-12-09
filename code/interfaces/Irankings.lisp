@@ -32,7 +32,7 @@
 (interface Irankings
   (include Ixmlminidom)
   (sig serializedrankings (rankingnodes))
-  (sig getcontestants (section dir id rankingnodes))
+  (sig getcontestants (sectionlabel dir id sections))
   (con getrankings-delivers-string
     (implies (xml-isnodelist rankingnodes)
              (stringp (getrankings rankingnodes))))

@@ -30,35 +30,35 @@
 
   ;;;
   ;;;
-  (defun getBoardForPair (rbrds gamenode section dir)
+  (defun getBoardForPair (rbrds sections sectionlabel dir)
     (if (null rbrds)
         ""
         (let* ((sbrd (car rbrds))
                (rest (cdr rbrds))
                (id (second sbrd))
-               (players (getcontestants section dir id (list gamenode))))
+               (players (getcontestants sectionlabel dir id sections)))
           (concatenate 'string
                        "<tr>"
-                       "<td>" (first sbrd)  "</td>"    ; boardnum
-                       "<td>" section id    "</td>"    ; vs. info
-                       "<td>" players       "</td>"    ; names
-                       "<td>" (third sbrd)  "</td>"    ; score
-                       "<td>" (fourth sbrd) "</td>"    ; matchpoints
+                       "<td>" (first sbrd)    "</td>"    ; boardnum
+                       "<td>" sectionlabel id "</td>"    ; vs. info
+                       "<td>" players         "</td>"    ; names
+                       "<td>" (third sbrd)    "</td>"    ; score
+                       "<td>" (fourth sbrd)   "</td>"    ; matchpoints
                        "</tr>"
-                       (getBoardForPair rest gamenode section dir)))))
+                       (getBoardForPair rest sections sectionlabel dir)))))
 
   ;Pulls the match results for a given Pair ID
   ;PairID format: (String Direction, String SectionNumber)
   ;Results format: ?
   ;Output format: String, HTML formatted text comprising all the boards
   ;    for one player pair
-  (defun getBoardsForPair (pairid section results gamenode dir)
-    (let* ((bforp (assoc-equal (mv pairid section) results)))
-      (getBoardForPair (cdr bforp) gamenode section dir)))
+  (defun getBoardsForPair (pairid sectionlabel results sections dir)
+    (let* ((bforp (assoc-equal (mv pairid sectionlabel) results)))
+      (getBoardForPair (cdr bforp) sections sectionlabel dir)))
 
   ;;;
   ;;;
-  (defun getAllPairs (results gamenode)
+  (defun getAllPairs (results sections)
     (let* ((ns (car results))
            (ew (cadr results))
            (nextns (car ns))
@@ -76,20 +76,19 @@
                            (getBoardsForPair (car keyew)
                                              (cadr keyew)
                                              ew
-                                             gamenode
+                                             sections
                                              "N-S") ; The *opponents'* dir.
                            *psctabletail*
-                           (getAllPairs (mv ns restew) gamenode))
+                           (getAllPairs (mv ns restew) sections))
               (concatenate 'string
                            *psctablehead*
-                           ;get info from gamenode
                            (getBoardsForPair (car keyns)
                                              (cadr keyns)
                                              ns
-                                             gamenode
+                                             sections
                                              "E-W")
                            *psctabletail*
-                           (getAllPairs (mv restns ew) gamenode))))))
+                           (getAllPairs (mv restns ew) sections))))))
 
   ;Pulls the Personal Score Card data for all players, and put's them all
   ;into html table format
@@ -97,7 +96,8 @@
   ;Output format: String, HTML formatted text comprising the score card
   ;    for one player pair
   (defun serializedPSC (gamenode boardnodes)
-    (let* ((results (getAllSeparateResults boardnodes)))
-      (getAllPairs results gamenode)))
+    (let* ((sections (bfsfindnodes gamenode "Section"))
+           (results (getAllSeparateResults boardnodes)))
+      (getAllPairs results sections)))
 
   (export Ipsc))
