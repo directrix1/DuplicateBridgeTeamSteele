@@ -35,7 +35,7 @@
   (sig sortcontestants (unsortedcontestants))
   (sig sortmvranks (ranks mvs))
   (sig serializedrankings (rankingnodes))
-  ;(sig serializedrankingsheader (gamenodes))
+  (sig serializedrankingsheader (gamenodes))
   (sig getcontestants (section dir id sections))
   
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
