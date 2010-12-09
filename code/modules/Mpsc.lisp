@@ -58,7 +58,7 @@
 
   ;;;
   ;;;
-  (defun getAllPairs (results sections)
+  (defun getAllPairs (results sections gamestring)
     (let* ((ns (car results))
            (ew (cadr results))
            (nextns (car ns))
@@ -78,8 +78,11 @@
                                              ew
                                              sections
                                              "N-S") ; The *opponents'* dir.
+                           "<tfoot><tr>" gamestring "</tr></tfoot>"
                            *psctabletail*
-                           (getAllPairs (mv ns restew) sections))
+                           (getAllPairs (mv ns restew)
+                                        sections
+                                        gamestring))
               (concatenate 'string
                            *psctablehead*
                            (getBoardsForPair (car keyns)
@@ -87,17 +90,21 @@
                                              ns
                                              sections
                                              "E-W")
+                           "<tfoot><tr>" gamestring "</tr></tfoot>"
                            *psctabletail*
-                           (getAllPairs (mv restns ew) sections))))))
-
+                           (getAllPairs (mv restns ew)
+                                        sections
+                                        gamestring))))))
+  
   ;Pulls the Personal Score Card data for all players, and put's them all
   ;into html table format
   ;XMLnodes format: Nodes format
   ;Output format: String, HTML formatted text comprising the score card
   ;    for one player pair
   (defun serializedPSC (gamenode boardnodes)
-    (let* ((sections (bfsfindnodes gamenode "Section"))
-           (results (getAllSeparateResults boardnodes)))
-      (getAllPairs results sections)))
+    (let* ((sections (xml-bfsfindnodes (list gamenode) "Section"))
+           (results (getAllSeparateResults boardnodes))
+           (gamestring (getgamestring gamenode)))
+      (getAllPairs results sections gamestring)))
 
   (export Ipsc))

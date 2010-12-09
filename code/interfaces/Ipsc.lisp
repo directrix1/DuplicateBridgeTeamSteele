@@ -53,7 +53,7 @@
   
   ;;;
   ;;;
-  (sig getAllPairs (results sections))
+  (sig getAllPairs (results sections gamestring))
   #|
   (con getPSC-con1
        (implies ()
