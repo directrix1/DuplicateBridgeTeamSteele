@@ -60,6 +60,49 @@
     (let* ((bforp (assoc-equal (mv pairid sectionlabel) results)))
       (getBoardForPair (cdr bforp) sections sectionlabel dir)))
 
+  
+    (defun pscheader (sectionlabel dir id sections average top)
+    (let* ((contestants (getcontestants sectionlabel dir id sections)))
+      (concatenate 'string
+                   "<tr><td colspan=\"5\">Scorecard for <b>Pair "
+                   sectionlabel
+                   id
+                   " "
+                   dir
+                   " (strat "
+                   (xml-getattribute contestants "Strat")
+                   ")</b><br>"
+                      (getcontestantsnames contestants)
+                   "<br>"
+                   " Score: "
+                      (xml-gettext (xml-getnode contestants "MatchpointTotal"))
+                      " ("
+                      (xml-gettext (xml-getnode contestants "Percentage"))
+                      "%) "
+                   (let* ((award (xml-getnode contestants "Award")))
+                     (if award
+                         (concatenate 'string
+                                      "MP: "
+                                      (xml-getattribute award "TypeOfAward")
+                                      " "
+                                      (xml-gettext award)
+                                      " ("
+                                      (xml-getattribute award "AwardCategory")
+                                      (xml-getattribute award "AwardStrat")
+                                      ")")
+                         ""))
+                   " Ave: "
+                   average
+                   " Top: "
+                   top
+                   "<br>"
+                   (getrankstring "Section" contestants)
+                   " "
+                   (getrankstring "Overall" contestants)
+                   "</td></tr>")))
+
+  (defun pscfooter (gamestring)
+    (concatenate 'string "<tr><td colspan=\"5\">" gamestring "</td></tr>"))
   ;;;
   ;;;
   (defun getAllPairs (results sections gamestring average top gamenode)
@@ -120,48 +163,7 @@
                                           top
                                           gamenode)))))))
 
-  (defun pscheader (sectionlabel dir id sections average top)
-    (let* ((contestants (getcontestants sectionlabel dir id sections)))
-      (concatenate 'string
-                   "<tr><td colspan=\"5\">Scorecard for <b>Pair "
-                   sectionlabel
-                   id
-                   " "
-                   dir
-                   " (strat "
-                   (xml-getattribute contestants "Strat")
-                   ")</b><br>"
-                      (getcontestantsnames contestants)
-                   "<br>"
-                   " Score: "
-                      (xml-gettext (xml-getnode contestants "MatchpointTotal"))
-                      " ("
-                      (xml-gettext (xml-getnode contestants "Percentage"))
-                      "%) "
-                   (let* ((award (xml-getnode contestants "Award")))
-                     (if award
-                         (concatenate 'string
-                                      "MP: "
-                                      (xml-getattribute award "TypeOfAward")
-                                      " "
-                                      (xml-gettext award)
-                                      " ("
-                                      (xml-getattribute award "AwardCategory")
-                                      (xml-getattribute award "AwardStrat")
-                                      ")")
-                         ""))
-                   " Ave: "
-                   average
-                   " Top: "
-                   top
-                   "<br>"
-                   (getrankstring "Section" contestants)
-                   " "
-                   (getrankstring "Overall" contestants)
-                   "</td></tr>")))
 
-  (defun pscfooter (gamestring)
-    (concatenate 'string "<tr><td colspan=\"5\">" gamestring "</td></tr>"))
   
   ;Pulls the Personal Score Card data for all players, and put's them all
   ;into html table format
