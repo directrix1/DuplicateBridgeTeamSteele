@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="990"
+   height="765"
+   id="svg4904"
+   version="1.1"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="teamsteele.svg"
+   inkscape:export-filename="/home/dtx/School/Fall 10/Software Engineering I CS4263-001/team/DuplicateBridgeTeamSteele/timpl/poster/teamsteele.png"
+   inkscape:export-xdpi="200"
+   inkscape:export-ydpi="200">
+  <defs
+     id="defs4906">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 495 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="765 : 495 : 1"
+       inkscape:persp3d-origin="382.5 : 330 : 1"
+       id="perspective4913" />
+    <filter
+       id="filter5288"
+       inkscape:label="Drop shadow"
+       inkscape:menu-tooltip="Low, sharp bevel"
+       inkscape:menu="Bevels"
+       height="1.5"
+       y="-.25"
+       width="1.5"
+       x="-.25"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         id="feGaussianBlur5290"
+         stdDeviation="7"
+         result="result8" />
+      <feComposite
+         id="feComposite5292"
+         in2="result8"
+         result="result6"
+         operator="xor"
+         in="result8" />
+      <feDisplacementMap
+         id="feDisplacementMap5294"
+         in2="result6"
+         in="result8"
+         xChannelSelector="A"
+         yChannelSelector="A"
+         scale="75"
+         result="result4" />
+      <feComposite
+         id="feComposite5296"
+         in2="result4"
+         result="result2"
+         operator="arithmetic"
+         in="SourceGraphic"
+         k1="1" />
+      <feComposite
+         id="feComposite5298"
+         in2="result2"
+         result="fbSourceGraphic"
+         in="result8"
+         operator="in" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix5300" />
+      <feSpecularLighting
+         id="feSpecularLighting5302"
+         in="fbSourceGraphicAlpha"
+         surfaceScale="1"
+         specularConstant="2"
+         specularExponent="18.5"
+         result="result9">
+        <feDistantLight
+           id="feDistantLight5304"
+           elevation="30"
+           azimuth="225" />
+      </feSpecularLighting>
+      <feComposite
+         id="feComposite5306"
+         in2="fbSourceGraphic"
+         result="result0"
+         operator="atop" />
+      <feMorphology
+         id="feMorphology5308"
+         radius="2"
+         result="result1"
+         in="fbSourceGraphicAlpha"
+         operator="dilate" />
+      <feComposite
+         id="feComposite5310"
+         in2="result1"
+         in="result0"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         result="fbSourceGraphicAlpha"
+         in="fbSourceGraphic"
+         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+         id="feColorMatrix5432" />
+      <feGaussianBlur
+         id="feGaussianBlur5434"
+         in="fbSourceGraphicAlpha"
+         stdDeviation="5.000000"
+         result="blur" />
+      <feColorMatrix
+         id="feColorMatrix5436"
+         result="bluralpha"
+         type="matrix"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.500000 0 " />
+      <feOffset
+         id="feOffset5438"
+         in="bluralpha"
+         dx="12.000000"
+         dy="8.000000"
+         result="offsetBlur" />
+      <feMerge
+         id="feMerge5440">
+        <feMergeNode
+           id="feMergeNode5442"
+           in="offsetBlur" />
+        <feMergeNode
+           id="feMergeNode5444"
+           in="fbSourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     inkscape:document-units="in"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="1"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.72"
+     inkscape:cx="371.82043"
+     inkscape:cy="327.28844"
+     inkscape:current-layer="layer1"
+     id="namedview4908"
+     showgrid="false"
+     inkscape:window-width="1280"
+     inkscape:window-height="773"
+     inkscape:window-x="0"
+     inkscape:window-y="1"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata4910">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-225)">
+    <text
+       xml:space="preserve"
+       style="font-size:210.58810425px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;filter:url(#filter5288);font-family:Tlwg Typo;-inkscape-font-specification:Tlwg Typo Medium"
+       x="104.07838"
+       y="437.53339"
+       id="text4915"
+       transform="matrix(0.62261755,0,0,1.6061224,-5.5555556,0)"><tspan
+         sodipodi:role="line"
+         id="tspan4917"
+         x="104.07838"
+         y="437.53339">TEAM STEELE</tspan></text>
+  </g>
+</svg>
